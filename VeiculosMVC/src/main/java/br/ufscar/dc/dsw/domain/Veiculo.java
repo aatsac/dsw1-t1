@@ -43,18 +43,12 @@ public class Veiculo extends AbstractEntity<Long> {
      */
     @Column(columnDefinition = "JSON")
     private String fotos;
-
-    /**
-     * Cada veículo pertence a uma loja (referenciada pelo CNPJ)
-     */
+    
     @NotNull(message = "Loja é obrigatória")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "idLoja", nullable = false)
     private Loja loja;
 
-    /**
-     * CNPJ redundante da loja, apenas leitura (não insere/atualiza)
-     */
     @Column(name = "cnpjLoja", length = 18, insertable = false, updatable = false)
     private String cnpjLoja;
 
