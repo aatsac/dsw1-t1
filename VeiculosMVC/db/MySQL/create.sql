@@ -30,7 +30,6 @@ CREATE TABLE Loja (
 );
 
 -- 5) Veículo cadastrado pela Loja
--- 5) Veículo cadastrado pela Loja (com idLoja + cnpjLoja)
 CREATE TABLE Veiculo (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   idLoja BIGINT NOT NULL,

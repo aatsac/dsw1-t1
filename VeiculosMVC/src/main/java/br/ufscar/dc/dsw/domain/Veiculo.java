@@ -49,9 +49,6 @@ public class Veiculo extends AbstractEntity<Long> {
     @JoinColumn(name = "idLoja", nullable = false)
     private Loja loja;
 
-    @Column(name = "cnpjLoja", length = 18, insertable = false, updatable = false)
-    private String cnpjLoja;
-
     // --- getters e setters ---
     public String getPlaca() {
         return placa;
@@ -108,8 +105,4 @@ public class Veiculo extends AbstractEntity<Long> {
         this.loja = loja;
     }
 
-    public String getCnpjLoja() {
-        return cnpjLoja;
-    }
-    // Não crie setter para cnpjLoja!
 }
