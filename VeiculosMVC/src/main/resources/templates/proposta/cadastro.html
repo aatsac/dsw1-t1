@@ -97,6 +97,23 @@
               <span th:errors="*{dataCompra}"></span>
             </div>
           </div>
+
+          <!-- Status -->
+          <div class="form-group col-md-4">
+            <label for="status">Status</label>
+            <select id="status"
+                    class="form-control"
+                    th:field="*{status}"
+                    th:classappend="${#fields.hasErrors('status')}? 'is-invalid'">
+              <option value="" disabled>Selecione</option>
+              <option th:each="s : ${statusList}"
+                      th:value="${s}"
+                      th:text="${s}"></option>
+            </select>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
+              <span th:errors="*{status}"></span>
+            </div>
+          </div>
         </div>
 
         <!-- Condições de Pagamento -->

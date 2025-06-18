@@ -42,6 +42,11 @@ public class PropostaController {
         return veiculoService.buscarTodos();
     }
 
+    @ModelAttribute("statusList")
+    public Proposta.Status[] getStatusList() {
+        return Proposta.Status.values();
+    }
+
     @GetMapping("/cadastrar")
     public String cadastrar(Proposta proposta) {
         return "proposta/cadastro";

@@ -31,6 +31,7 @@
               <th>Veículo</th>
               <th>Valor (R$)</th>
               <th>Data</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -41,6 +42,7 @@
               <td th:text="${p.veiculo.modelo + ' (' + p.veiculo.placa + ')'}">Modelo</td>
               <td th:text="${#numbers.formatDecimal(p.valor,2,2,'COMMA')}">R$ 00,00</td>
               <td th:text="${p.dataCompra}">2025-06-18</td>
+              <td th:text="${p.status}">ABERTO</td>
               <td>
                 <a class="btn btn-info btn-sm"
                    th:href="@{/propostas/editar/{id}(id=${p.id})}"

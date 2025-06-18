@@ -52,6 +52,7 @@ CREATE TABLE Proposta (
   dataCompra    DATE NOT NULL,
   idVeiculo     BIGINT NOT NULL,
   idCliente     BIGINT NOT NULL,
+  estado        ENUM('ABERTO', 'ACEITO', 'NÃO ACEITO') DEFAULT 'ABERTO',
   FOREIGN KEY (idVeiculo) REFERENCES Veiculo(id),
   FOREIGN KEY (idCliente) REFERENCES Cliente(id)
 );

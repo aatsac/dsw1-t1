@@ -3,10 +3,10 @@ package br.ufscar.dc.dsw.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "Proposta")
 public class Proposta extends AbstractEntity<Long> {
@@ -22,21 +22,21 @@ public class Proposta extends AbstractEntity<Long> {
     @Column(name = "dataCompra", nullable = false)
     private LocalDate dataCompra;
 
-    /**
-     * Relacionamento com Veiculo via placa
-     */
     @NotNull
     @ManyToOne
     @JoinColumn(name = "idVeiculo", referencedColumnName = "id", nullable = false)
     private Veiculo veiculo;
 
-    /**
-     * Relacionamento com Cliente via CPF
-     */
     @NotNull
     @ManyToOne
     @JoinColumn(name = "idCliente", referencedColumnName = "id", nullable = false)
     private Cliente cliente;
+
+    public enum Status { ABERTO, ACEITO, NAO_ACEITO }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Status status = Status.ABERTO;
 
     // --- getters e setters ---
     public BigDecimal getValor() {
@@ -68,5 +68,11 @@ public class Proposta extends AbstractEntity<Long> {
     }
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
