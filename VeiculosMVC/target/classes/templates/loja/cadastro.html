@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <section class="layout-content" layout:fragment="corpo">
+
+    <nav class="navbar navbar-expand-md bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <i class="oi oi-caret-right"></i>
+          <span>Cadastrar Loja</span>
+        </li>
+      </ul>
+      <a class="btn btn-primary btn-md" th:href="@{/lojas/listar}" role="button">
+        <span class="oi oi-spreadsheet"></span>
+        <span>Listar Lojas</span>
+      </a>
+    </nav>
+
+    <div class="container mt-4">
+      <div th:replace="~{fragments/alert}"></div>
+
+      <form th:object="${loja}"
+            th:action="${loja.id} == null ? @{/lojas/salvar} : @{/lojas/editar}"
+            method="post">
+
+        <!-- Campo oculto para preencher papel -->
+        <input type="hidden"
+               th:field="*{papel}"
+               value="LOJA" />
+
+        <!-- Nome (herdado de Usuario) -->
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input
+            type="text"
+            id="nome"
+            class="form-control"
+            th:field="*{nome}"
+            placeholder="Nome da loja"
+            th:classappend="${#fields.hasErrors('nome')}? 'is-invalid'">
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}">
+            <span th:errors="*{nome}"></span>
+          </div>
+        </div>
+
+        <!-- Email (herdado de Usuario) -->
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            th:field="*{email}"
+            placeholder="seu@exemplo.com"
+            th:classappend="${#fields.hasErrors('email')}? 'is-invalid'">
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}">
+            <span th:errors="*{email}"></span>
+          </div>
+        </div>
+
+        <!-- Password (herdado de Usuario) -->
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            th:field="*{password}"
+            placeholder="Senha"
+            th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}">
+            <span th:errors="*{password}"></span>
+          </div>
+        </div>
+
+        <!-- CNPJ -->
+        <div class="form-group">
+          <label for="cnpj">CNPJ</label>
+          <input
+            type="text"
+            id="cnpj"
+            class="form-control"
+            th:field="*{cnpj}"
+            placeholder="__.___.___/____-__"
+            th:readonly="${loja.id != null}"
+            data-mask="00.000.000/0000-00"
+            data-mask-reverse="true"
+            th:classappend="${#fields.hasErrors('cnpj')}? 'is-invalid'">
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('cnpj')}">
+            <span th:errors="*{cnpj}"></span>
+          </div>
+        </div>
+
+        <!-- Descrição -->
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <textarea
+            id="descricao"
+            class="form-control"
+            th:field="*{descricao}"
+            rows="3"
+            placeholder="Descreva sua loja"
+            th:classappend="${#fields.hasErrors('descricao')}? 'is-invalid'"></textarea>
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('descricao')}">
+            <span th:errors="*{descricao}"></span>
+          </div>
+        </div>
+
+        <input type="hidden" th:field="*{id}" />
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </form>
+    </div>
+
+  </section>
+</body>
+</html>
