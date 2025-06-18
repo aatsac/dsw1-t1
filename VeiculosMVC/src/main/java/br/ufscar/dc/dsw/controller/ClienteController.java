@@ -76,14 +76,14 @@ public class ClienteController {
 		return "redirect:/clientes/listar";
 	}
 	
-	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable("id") Long id, ModelMap model) {
-	    /*if (service.clienteTemVeiculos(id)) {
-	        model.addAttribute("fail", "Cliente não excluída. Possui veículo(s) vinculado(s).");
-	    } else {*/
-	        service.excluir(id);
-	        model.addAttribute("sucess", "Cliente excluída com sucesso.");
-	    //}
-	    return listar(model);
-	}
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
+        if (service.clienteTemProposta(id)) {
+            attr.addFlashAttribute("fail", "Cliente não pode ser excluído pois possui propostas associadas.");
+        } else {
+            service.excluir(id);
+            attr.addFlashAttribute("sucess", "Cliente excluído com sucesso.");
+        }
+        return "redirect:/clientes/listar";
+    }
 }

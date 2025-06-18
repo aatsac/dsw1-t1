@@ -87,12 +87,13 @@ public class VeiculoController {
     }
     
     @GetMapping("/excluir/{id}")
-    public String excluir(
-            @PathVariable("id") Long id, 
-            ModelMap model) {
-        
-        veiculoService.excluir(id);
-        model.addAttribute("sucess", "Veículo excluído com sucesso.");
-        return listar(model);
+    public String excluir(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
+        if (veiculoService.veiculoTemProposta(id)) {
+            attr.addFlashAttribute("fail", "Veículo não pode ser excluído pois possui propostas associadas.");
+        } else {
+            veiculoService.excluir(id);
+            attr.addFlashAttribute("sucess", "Veículo excluído com sucesso.");
+        }
+        return "redirect:/veiculos/listar";
     }
 }

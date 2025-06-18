@@ -34,4 +34,10 @@ public class VeiculoService implements IVeiculoService {
 	public List<Veiculo> buscarTodos() {
 		return dao.findAll();
 	}
+
+	@Transactional(readOnly = true)
+	public boolean veiculoTemProposta(Long id) {
+		Veiculo veiculo = dao.findById(id).orElse(null);
+		return veiculo != null && veiculo.getPropostas() != null && !veiculo.getPropostas().isEmpty();
+	}
 }

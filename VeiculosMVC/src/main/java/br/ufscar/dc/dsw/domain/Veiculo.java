@@ -2,6 +2,8 @@
 package br.ufscar.dc.dsw.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,6 +39,9 @@ public class Veiculo extends AbstractEntity<Long> {
     @NotNull
     @Column(precision = 15, scale = 2)
     private BigDecimal valor;
+
+    @OneToMany(mappedBy = "veiculo")
+    private List<Proposta> propostas;
 
     /**
      * Armazena o JSON das URLs das fotos, ex: ["url1","url2",...]
@@ -104,5 +109,10 @@ public class Veiculo extends AbstractEntity<Long> {
     public void setLoja(Loja loja) {
         this.loja = loja;
     }
-
+    public List<Proposta> getPropostas() {
+        return propostas;
+    }
+    public void setPropostas(List<Proposta> propostas) {
+        this.propostas = propostas;
+    }
 }

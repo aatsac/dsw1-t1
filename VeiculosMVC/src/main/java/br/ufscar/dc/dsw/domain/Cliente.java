@@ -2,10 +2,13 @@
 package br.ufscar.dc.dsw.domain;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -35,6 +38,9 @@ public class Cliente extends Usuario {
     @PastOrPresent
     private LocalDate dataNascimento;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<Proposta> propostas;
+
     // getters e setters
     public String getCpf() {
         return cpf;
@@ -59,5 +65,11 @@ public class Cliente extends Usuario {
     }
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+    public List<Proposta> getPropostas() {
+        return propostas;
+    }
+    public void setPropostas(List<Proposta> propostas) {
+        this.propostas = propostas;
     }
 }

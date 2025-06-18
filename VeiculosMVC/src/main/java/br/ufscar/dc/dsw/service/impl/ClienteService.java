@@ -38,4 +38,10 @@ public class ClienteService implements IClienteService {
 	public Cliente findByCpf(String cpf) {
 	    return dao.findByCpf(cpf);
 	}
+
+	@Transactional(readOnly = true)
+	public boolean clienteTemProposta(Long id) {
+		Cliente cliente = dao.findById(id).orElse(null);
+		return cliente != null && cliente.getPropostas() != null && !cliente.getPropostas().isEmpty();
+	}
 }
