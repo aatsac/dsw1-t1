@@ -1,0 +1,66 @@
+<!-- lista.html -->
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <section class="layout-content" layout:fragment="corpo">
+
+    <nav class="navbar navbar-expand-md bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <i class="oi oi-caret-right"></i>
+          <span>Lista de Lojas</span>
+        </li>
+      </ul>
+      <a class="btn btn-primary btn-md" th:href="@{/lojas/cadastrar}" role="button">
+        <span class="oi oi-plus"></span>
+        <span>Nova Loja</span>
+      </a>
+    </nav>
+
+    <div class="container mt-4">
+      <div th:replace="fragments/alert"></div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="loja : ${lojas}">
+              <td th:text="${loja.id}">1</td>
+              <td th:text="${loja.nome}">Loja X</td>
+              <td th:text="${loja.cnpj}">00.000.000/0000-00</td>
+              <td th:text="${loja.descricao}">...</td>
+              <td>
+                <a
+                  class="btn btn-info btn-sm"
+                  th:href="@{/lojas/editar/{id}(id=${loja.id})}"
+                  role="button">
+                  <span class="oi oi-brush"></span>
+                </a>
+                <a
+                  class="btn btn-danger btn-sm"
+                  th:href="@{/lojas/excluir/{id}(id=${loja.id})}"
+                  role="button"
+                  onclick="return confirm('Deseja realmente excluir?');">
+                  <span class="oi oi-circle-x"></span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+</body>
+</html>

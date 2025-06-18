@@ -1,0 +1,89 @@
+package br.ufscar.dc.dsw.controller;
+
+import jakarta.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import br.ufscar.dc.dsw.domain.Cliente;
+import br.ufscar.dc.dsw.service.spec.IClienteService;
+
+@Controller
+@RequestMapping("/clientes")
+public class ClienteController {
+	
+	@Autowired
+	private IClienteService service;
+	
+	@GetMapping("/cadastrar")
+	public String cadastrar(Cliente cliente) {
+	    // garante que o hidden *{papel} saia com "CLIENTE"
+	    cliente.setPapel("CLIENTE");
+	    return "cliente/cadastro";
+	}
+	
+	@GetMapping("/listar")
+	public String listar(ModelMap model) {
+		model.addAttribute("clientes",service.buscarTodos());
+		return "cliente/lista";
+	}
+	
+	@PostMapping("/salvar")
+	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			return "cliente/cadastro";
+		}
+		
+		service.salvar(cliente);
+		attr.addFlashAttribute("sucess", "Cliente inserida com sucesso.");
+		return "redirect:/clientes/listar";
+	}
+	
+	@GetMapping("/editar/{id}")
+	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("cliente", service.buscarPorId(id));
+		return "cliente/cadastro";
+	}
+	
+	@PostMapping("/editar")
+	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+		if (result.hasErrors()) {
+			return "cliente/cadastro";
+		}
+
+		Cliente clienteExistente = service.buscarPorId(cliente.getId());
+		if (clienteExistente != null) {
+			clienteExistente.setNome(cliente.getNome());
+			clienteExistente.setEmail(cliente.getEmail());
+			clienteExistente.setPassword(cliente.getPassword());
+			clienteExistente.setTelefone(cliente.getTelefone());
+			clienteExistente.setSexo(cliente.getSexo());
+			clienteExistente.setDataNascimento(cliente.getDataNascimento());
+			// Não altere o CPF!
+			service.salvar(clienteExistente);
+			attr.addFlashAttribute("sucess", "Cliente editado com sucesso.");
+		} else {
+			attr.addFlashAttribute("fail", "Cliente não encontrado.");
+		}
+		return "redirect:/clientes/listar";
+	}
+	
+	@GetMapping("/excluir/{id}")
+	public String excluir(@PathVariable("id") Long id, ModelMap model) {
+	    /*if (service.clienteTemVeiculos(id)) {
+	        model.addAttribute("fail", "Cliente não excluída. Possui veículo(s) vinculado(s).");
+	    } else {*/
+	        service.excluir(id);
+	        model.addAttribute("sucess", "Cliente excluída com sucesso.");
+	    //}
+	    return listar(model);
+	}
+}
