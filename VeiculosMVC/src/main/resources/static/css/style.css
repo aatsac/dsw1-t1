@@ -44,6 +44,8 @@ body {
     flex-shrink: 0;
     overflow: hidden;
     transition: width .5s;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .sidebar .nav {
