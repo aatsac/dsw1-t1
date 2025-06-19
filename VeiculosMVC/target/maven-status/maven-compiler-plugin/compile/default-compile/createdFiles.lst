@@ -26,6 +26,7 @@ br/ufscar/dc/dsw/service/impl/VeiculoService.class
 br/ufscar/dc/dsw/service/spec/ILojaService.class
 br/ufscar/dc/dsw/domain/Usuario.class
 br/ufscar/dc/dsw/config/MvcConfig.class
+br/ufscar/dc/dsw/domain/Proposta$Status.class
 br/ufscar/dc/dsw/service/impl/LojaService.class
 br/ufscar/dc/dsw/service/spec/IPropostaService.class
 br/ufscar/dc/dsw/validation/UniqueCNPJ.class
