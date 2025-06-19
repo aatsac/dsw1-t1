@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
+    <meta charset="UTF-8" />
 </head>
 <body>
-	<section class="layout-content" layout:fragment="corpo">
-
-		<div class="container" style="text-align: center;">
-			<h1>Livraria Virtual</h1>
-			<img alt="" th:src="@{/image/image.png}" style="width:500px;">
-		</div>
-
-	</section>
+<section class="layout-content" layout:fragment="corpo">
+    <div class="container mt-5">
+        <h1>Bem-vindo ao sistema de compra e venda de veículos</h1>
+        <p>Use o menu para navegar.</p>
+    </div>
+</section>
 </body>
 </html>

@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
-	<header th:fragment="cabecalho">
-		<nav
-			class="navbar navbar-inverse navbar navbar-dark bg-dark fixed-top">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="btn btn-dark navbar-toggle pull-left">
-						<i class="oi oi-menu"></i>
-					</button>
-					<a class="navbar-brand " th:href="@{/}">Livraria Virtual</a>
-				</div>
-			</div>
-		</nav>
-	</header>
+<header th:fragment="cabecalho">
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <button class="btn btn-dark navbar-toggle pull-left">
+                <i class="oi oi-menu"></i>
+            </button>
+            <a class="navbar-brand" th:href="@{/}">Sistema Veículos</a>
+
+            <div class="ml-auto">
+                <a th:href="@{?lang=pt}"><img src="/image/Brasil.gif" width="24"/></a>
+                <a th:href="@{?lang=en}"><img src="/image/EUA.gif" width="24"/></a>
+
+                <span sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name"></span>
+                    (<span sec:authentication="principal.usuario.papel"></span>)
+                    <form th:action="@{/logout}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
+                    </form>
+                </span>
+                <a sec:authorize="isAnonymous()" class="btn btn-sm btn-outline-light" th:href="@{/login}">Login</a>
+            </div>
+        </div>
+    </nav>
+</header>
 </body>
 </html>

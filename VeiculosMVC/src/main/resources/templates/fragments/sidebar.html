@@ -1,79 +1,51 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        .sidebar {
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-    </style>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
-    <nav class="sidebar sidebar-open" th:fragment="nav-sidebar">
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/}">
-                    <i class="oi oi-home"></i> <span>Home</span>
-                </a>
-            </li>
-        </ul>
+<nav class="sidebar sidebar-open" th:fragment="nav-sidebar">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}"><i class="oi oi-home"></i> Home</a>
+        </li>
+    </ul>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><span class="nav-link active">Clientes</span></li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/clientes/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/clientes/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
-                </a>
-            </li>
+    <div sec:authorize="hasRole('ADMIN')">
+        <ul class="nav nav-pills flex-column mt-3">
+            <li class="nav-item">Clientes</li>
+            <li><a class="nav-link" th:href="@{/clientes/cadastrar}"><i class="oi oi-plus"></i> Cadastrar</a></li>
+            <li><a class="nav-link" th:href="@{/clientes/listar}"><i class="oi oi-spreadsheet"></i> Listar</a></li>
         </ul>
+        <ul class="nav nav-pills flex-column mt-3">
+            <li class="nav-item">Lojas</li>
+            <li><a class="nav-link" th:href="@{/lojas/cadastrar}"><i class="oi oi-plus"></i> Cadastrar</a></li>
+            <li><a class="nav-link" th:href="@{/lojas/listar}"><i class="oi oi-spreadsheet"></i> Listar</a></li>
+        </ul>
+    </div>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><span class="nav-link active">Lojas</span></li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/lojas/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/lojas/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
-                </a>
-            </li>
+    <div sec:authorize="hasRole('LOJA')">
+        <ul class="nav nav-pills flex-column mt-3">
+            <li class="nav-item">Veículos</li>
+            <li><a class="nav-link" th:href="@{/veiculos/cadastrar}"><i class="oi oi-plus"></i> Cadastrar</a></li>
+            <li><a class="nav-link" th:href="@{/veiculos/listar-por-loja}"><i class="oi oi-spreadsheet"></i> Meus Veículos</a></li>
         </ul>
+        <ul class="nav nav-pills flex-column mt-3">
+            <li class="nav-item">Propostas</li>
+            <li><a class="nav-link" th:href="@{/propostas/analise}"><i class="oi oi-eye"></i> Analisar</a></li>
+        </ul>
+    </div>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><span class="nav-link active">Veículos</span></li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/veiculos/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/veiculos/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
-                </a>
-            </li>
+    <div sec:authorize="hasRole('CLIENTE')">
+        <ul class="nav nav-pills flex-column mt-3">
+            <li class="nav-item">Propostas</li>
+            <li><a class="nav-link" th:href="@{/propostas/cadastrar}"><i class="oi oi-plus"></i> Nova</a></li>
+            <li><a class="nav-link" th:href="@{/propostas/listar-por-cliente}"><i class="oi oi-spreadsheet"></i> Minhas Propostas</a></li>
         </ul>
+    </div>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><span class="nav-link active">Propostas</span></li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/propostas/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/propostas/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="nav nav-pills flex-column mt-3">
+        <li class="nav-item">Veículos (Público)</li>
+        <li><a class="nav-link" th:href="@{/veiculos/listar}"><i class="oi oi-list"></i> Todos</a></li>
+    </ul>
+</nav>
 </body>
 </html>
