@@ -4,15 +4,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.ufscar.dc.dsw.dao.IClienteDAO;
 import br.ufscar.dc.dsw.dao.ILojaDAO;
 import br.ufscar.dc.dsw.dao.IVeiculoDAO;
 import br.ufscar.dc.dsw.dao.IPropostaDAO;
+import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.domain.Proposta;
 import br.ufscar.dc.dsw.domain.Veiculo;
+import br.ufscar.dc.dsw.domain.Usuario;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,11 +28,19 @@ public class VeiculosMvcApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(IVeiculoDAO veiculoDAO, ILojaDAO lojaDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO) {
+	public CommandLineRunner demo(IVeiculoDAO veiculoDAO, ILojaDAO lojaDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO, IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder) {
 		return (args) -> {
+
+			Usuario a1 = new Usuario();
+			a1.setEmail("admin@email.com");
+			a1.setPassword(encoder.encode("123456"));
+			a1.setNome("Admin");
+			a1.setPapel("ADMIN");
+			usuarioDAO.save(a1);
+
 			Loja l1 = new Loja();
 			l1.setEmail("loja@email.com");
-			l1.setPassword("123456");
+			l1.setPassword(encoder.encode("123456"));
 			l1.setNome("Loja de Veículos A");
 			l1.setPapel("LOJA");
 			l1.setCnpj("12.345.678/0001-90");
@@ -38,7 +49,7 @@ public class VeiculosMvcApplication {
 
 			Cliente c1 = new Cliente();
 			c1.setEmail("cliente@email.com");
-			c1.setPassword("123456");
+			c1.setPassword(encoder.encode("123456"));
 			c1.setNome("Cliente A");
 			c1.setPapel("CLIENTE");
 			c1.setCpf("123.456.789-00");

@@ -1,8 +1,8 @@
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/VeiculosMvcApplication.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/config/MvcConfig.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/config/WebSecurityConfig.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ClienteController.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ErrorViewController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/HomeController.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/LojaController.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/PropostaController.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/VeiculoController.java
@@ -18,6 +18,8 @@
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Proposta.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Usuario.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Veiculo.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetails.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetailsServiceImpl.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/ClienteService.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/LojaService.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/PropostaService.java

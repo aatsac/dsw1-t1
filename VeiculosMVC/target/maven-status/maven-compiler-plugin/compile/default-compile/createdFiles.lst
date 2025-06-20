@@ -1,4 +1,5 @@
 br/ufscar/dc/dsw/service/impl/ClienteService.class
+br/ufscar/dc/dsw/config/WebSecurityConfig.class
 br/ufscar/dc/dsw/controller/VeiculoController.class
 br/ufscar/dc/dsw/dao/IVeiculoDAO.class
 br/ufscar/dc/dsw/controller/PropostaController.class
@@ -11,6 +12,7 @@ br/ufscar/dc/dsw/controller/ClienteController.class
 br/ufscar/dc/dsw/domain/Veiculo.class
 br/ufscar/dc/dsw/domain/Proposta.class
 br/ufscar/dc/dsw/domain/Cliente$Sexo.class
+br/ufscar/dc/dsw/security/UsuarioDetailsServiceImpl.class
 br/ufscar/dc/dsw/service/spec/IVeiculoService.class
 br/ufscar/dc/dsw/conversor/LojaConversor.class
 br/ufscar/dc/dsw/domain/Cliente.class
@@ -18,10 +20,10 @@ br/ufscar/dc/dsw/domain/AbstractEntity.class
 br/ufscar/dc/dsw/dao/ILojaDAO.class
 br/ufscar/dc/dsw/controller/ErrorViewController.class
 br/ufscar/dc/dsw/controller/LojaController.class
-br/ufscar/dc/dsw/controller/HomeController.class
 br/ufscar/dc/dsw/dao/IUsuarioDAO.class
 br/ufscar/dc/dsw/dao/IClienteDAO.class
 br/ufscar/dc/dsw/VeiculosMvcApplication.class
+br/ufscar/dc/dsw/security/UsuarioDetails.class
 br/ufscar/dc/dsw/service/impl/VeiculoService.class
 br/ufscar/dc/dsw/service/spec/ILojaService.class
 br/ufscar/dc/dsw/domain/Usuario.class
