@@ -45,10 +45,10 @@ public class WebSecurityConfig {
                     .permitAll()
                 // apenas clientes e admins podem criar/ver propostas
                 .requestMatchers("/propostas/**")
-                    .hasAnyAuthority("CLIENTE", "ADMIN")
+                    .hasAnyAuthority("CLIENTE")
                 // apenas lojas admins podem cadastrar/editar veículos
                 .requestMatchers("/veiculos/**")
-                    .hasAnyAuthority("LOJA", "ADMIN")
+                    .hasAnyAuthority("LOJA")
                 // apenas administrador pode gerenciar clientes e lojas
                 .requestMatchers("/lojas/**", "/clientes/**")
                     .hasAuthority("ADMIN")

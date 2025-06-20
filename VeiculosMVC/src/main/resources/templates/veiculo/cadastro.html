@@ -23,32 +23,12 @@
     <div class="container">
       <div th:replace="~{fragments/alert}"></div>
 
-      <form th:object="${veiculo}"
-            th:action="${veiculo.id} == null
-                        ? @{/veiculos/salvar}
-                        : @{/veiculos/editar}"
-            method="post">
+      <form th:object="${veiculo}" th:action="@{/veiculos/salvar}" method="post">
 
         <input type="hidden" th:field="*{id}" />
 
         <div class="form-row">
-          <!-- Loja -->
-          <div class="form-group col-md-6">
-            <label for="loja">Loja</label>
-            <select id="loja"
-                    class="form-control"
-                    th:field="*{loja}"
-                    th:classappend="${#fields.hasErrors('loja')}? 'is-invalid'">
-              <option value="" disabled>Selecione</option>
-              <option th:each="l : ${lojas}"
-                      th:value="${l.id}"
-                      th:text="${l.nome + ' (' + l.cnpj + ')'}">
-              </option>
-            </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('loja')}">
-              <span th:errors="*{loja}"></span>
-            </div>
-          </div>
+
 
           <!-- Placa -->
           <div class="form-group col-md-6">
@@ -167,6 +147,9 @@
             <span th:errors="*{fotos}"></span>
           </div>
         </div>
+
+        <input type="hidden" name="loja.id"
+               th:value="${#authentication.principal.usuario.id}" />
 
         <button type="submit" class="btn btn-primary">Salvar</button>
       </form>

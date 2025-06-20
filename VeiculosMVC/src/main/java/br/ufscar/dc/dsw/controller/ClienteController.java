@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,9 @@ public class ClienteController {
 	
 	@Autowired
 	private IClienteService service;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Cliente cliente) {
@@ -41,6 +45,7 @@ public class ClienteController {
 		if (result.hasErrors()) {
 			return "cliente/cadastro";
 		}
+		cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
 		
 		service.salvar(cliente);
 		attr.addFlashAttribute("sucess", "Cliente inserida com sucesso.");
@@ -52,30 +57,33 @@ public class ClienteController {
 		model.addAttribute("cliente", service.buscarPorId(id));
 		return "cliente/cadastro";
 	}
-	
+
 	@PostMapping("/editar")
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		if (result.hasErrors()) {
 			return "cliente/cadastro";
 		}
 
-		Cliente clienteExistente = service.buscarPorId(cliente.getId());
-		if (clienteExistente != null) {
-			clienteExistente.setNome(cliente.getNome());
-			clienteExistente.setEmail(cliente.getEmail());
-			clienteExistente.setPassword(cliente.getPassword());
-			clienteExistente.setTelefone(cliente.getTelefone());
-			clienteExistente.setSexo(cliente.getSexo());
-			clienteExistente.setDataNascimento(cliente.getDataNascimento());
+		Cliente existente = service.buscarPorId(cliente.getId());
+		if (existente != null) {
+			existente.setNome(cliente.getNome());
+			existente.setEmail(cliente.getEmail());
+			// só recriptografa se a senha foi alterada
+			if (!cliente.getPassword().isBlank()) {
+				existente.setPassword(passwordEncoder.encode(cliente.getPassword()));
+			}
+			existente.setTelefone(cliente.getTelefone());
+			existente.setSexo(cliente.getSexo());
+			existente.setDataNascimento(cliente.getDataNascimento());
 			// Não altere o CPF!
-			service.salvar(clienteExistente);
+			service.salvar(existente);
 			attr.addFlashAttribute("sucess", "Cliente editado com sucesso.");
 		} else {
 			attr.addFlashAttribute("fail", "Cliente não encontrado.");
 		}
 		return "redirect:/clientes/listar";
 	}
-	
+		
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
         if (service.clienteTemProposta(id)) {

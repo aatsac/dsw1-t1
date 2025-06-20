@@ -33,18 +33,21 @@ public class VeiculoController {
     public List<Loja> listaLojas() {
         return lojaService.buscarTodos();
     }
-    
-    @GetMapping("/cadastrar")
-    public String cadastrar(Veiculo veiculo) {
-        return "veiculo/cadastro";
-    }
 
     private Loja getLojaLogada() {
         UsuarioDetails ud = (UsuarioDetails)
-            SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            SecurityContextHolder.getContext()
+                                 .getAuthentication()
+                                 .getPrincipal();
         return (Loja) ud.getUsuario();
     }
-    
+
+    @GetMapping("/cadastrar")
+    public String cadastrar(Veiculo veiculo) {
+        veiculo.setLoja(getLojaLogada());
+        return "veiculo/cadastro";
+    }
+
     @GetMapping("/listar")
     public String listar(ModelMap model) {
 
@@ -67,24 +70,17 @@ public class VeiculoController {
         return "veiculo/lista";
     }
     
-@PostMapping("/salvar")
-public String salvar(
-        @Valid Veiculo veiculo,
-        BindingResult result,
-        RedirectAttributes attr,
-        ModelMap model) {
-    
-    if (result.hasErrors()) {
-        // Só reexibe o dropdown para o ADMIN, não para a loja
-        return "veiculo/cadastro";
+    @PostMapping("/salvar")
+    public String salvar(@Valid Veiculo veiculo, BindingResult result, RedirectAttributes attr) {
+        if (result.hasErrors()) {
+            return "veiculo/cadastro";
+        }
+        // Garante que o veículo vai para a loja certa, ignorando qualquer valor vindo do form
+        veiculo.setLoja(getLojaLogada());
+        veiculoService.salvar(veiculo);
+        attr.addFlashAttribute("sucess", "Veículo salvo com sucesso.");
+        return "redirect:/veiculos/listar";
     }
-    
-    // força associação à loja logada:
-    veiculo.setLoja(getLojaLogada());
-    veiculoService.salvar(veiculo);
-    attr.addFlashAttribute("sucess", "Veículo inserido com sucesso.");
-    return "redirect:/veiculos/listar";
-}
 
     @GetMapping("/editar/{id}")
     public String preEditar(

@@ -52,8 +52,8 @@
             </li>
         </ul>
 
-        <!-- Veículos: LOJA e ADMIN -->
-        <ul class="nav nav-pills" sec:authorize="hasAnyAuthority('LOJA','ADMIN')">
+        <!-- Veículos: LOJA -->
+        <ul class="nav nav-pills" sec:authorize="hasAuthority('LOJA')">
             <li class="nav-item"><span class="nav-link active">Veículos</span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/veiculos/cadastrar}">
@@ -67,8 +67,8 @@
             </li>
         </ul>
 
-        <!-- Propostas: CLIENTE and ADMIN -->
-        <ul class="nav nav-pills" sec:authorize="hasAnyAuthority('CLIENTE','ADMIN')">
+        <!-- Propostas: CLIENTE -->
+        <ul class="nav nav-pills" sec:authorize="hasAuthority('CLIENTE')">
             <li class="nav-item"><span class="nav-link active">Propostas</span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/propostas/cadastrar}">
