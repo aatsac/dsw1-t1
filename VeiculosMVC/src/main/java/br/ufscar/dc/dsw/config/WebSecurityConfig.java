@@ -41,14 +41,14 @@ public class WebSecurityConfig {
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(authz -> authz
                 // recursos públicos
-                .requestMatchers("/error", "/login/**", "/js/**", "/css/**", "/image/**", "/webjars/**")
+                .requestMatchers("/", "/error", "/login/**", "/index**", "/js/**", "/css/**", "/image/**", "/webjars/**")
                     .permitAll()
-                // apenas clientes podem criar/ver propostas
+                // apenas clientes e admins podem criar/ver propostas
                 .requestMatchers("/propostas/**")
-                    .hasAuthority("CLIENTE")
-                // apenas lojas podem cadastrar/editar veículos
+                    .hasAnyAuthority("CLIENTE", "ADMIN")
+                // apenas lojas admins podem cadastrar/editar veículos
                 .requestMatchers("/veiculos/**")
-                    .hasAuthority("LOJA")
+                    .hasAnyAuthority("LOJA", "ADMIN")
                 // apenas administrador pode gerenciar clientes e lojas
                 .requestMatchers("/lojas/**", "/clientes/**")
                     .hasAuthority("ADMIN")

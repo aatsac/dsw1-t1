@@ -14,30 +14,49 @@ import br.ufscar.dc.dsw.service.spec.IVeiculoService;
 @Transactional(readOnly = false)
 public class VeiculoService implements IVeiculoService {
 
-	@Autowired
-	IVeiculoDAO dao;
-	
-	public void salvar(Veiculo veiculo) {
-		dao.save(veiculo);
-	}
-	
-	public void excluir(Long id) {
-		dao.deleteById(id);
-	}
-	
-	@Transactional(readOnly = true)
-	public Veiculo buscarPorId(Long id) {
-		return dao.findById(id.longValue());
-	}
-	
-	@Transactional(readOnly = true)
-	public List<Veiculo> buscarTodos() {
-		return dao.findAll();
-	}
+    @Autowired
+    private IVeiculoDAO dao;
 
-	@Transactional(readOnly = true)
-	public boolean veiculoTemProposta(Long id) {
-		Veiculo veiculo = dao.findById(id).orElse(null);
-		return veiculo != null && veiculo.getPropostas() != null && !veiculo.getPropostas().isEmpty();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Veiculo buscarPorId(Long id) {
+        return dao.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Veiculo> buscarTodos() {
+        return dao.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Veiculo> buscarPorModelo(String modelo) {
+        if (modelo == null || modelo.isBlank()) {
+            return dao.findAll();
+        }
+        return dao.findByModeloContaining(modelo);
+    }
+
+    @Override
+    public List<Veiculo> buscarPorLoja(Long lojaId) {
+        return dao.findAllByLojaId(lojaId);
+    }
+
+    @Override
+    public void salvar(Veiculo veiculo) {
+        dao.save(veiculo);
+    }
+
+    @Override
+    public void excluir(Long id) {
+        dao.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean veiculoTemProposta(Long id) {
+        Veiculo v = dao.findById(id).orElse(null);
+        return v != null && v.getPropostas() != null && !v.getPropostas().isEmpty();
+    }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -11,6 +12,8 @@
 </head>
 <body>
     <nav class="sidebar sidebar-open" th:fragment="nav-sidebar">
+
+        <!-- Always visible -->
         <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/}">
@@ -19,7 +22,8 @@
             </li>
         </ul>
 
-        <ul class="nav nav-pills">
+        <!-- Clientes: apenas ADMIN -->
+        <ul class="nav nav-pills" sec:authorize="hasAuthority('ADMIN')">
             <li class="nav-item"><span class="nav-link active">Clientes</span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/clientes/cadastrar}">
@@ -33,7 +37,8 @@
             </li>
         </ul>
 
-        <ul class="nav nav-pills">
+        <!-- Lojas: apenas ADMIN -->
+        <ul class="nav nav-pills" sec:authorize="hasAuthority('ADMIN')">
             <li class="nav-item"><span class="nav-link active">Lojas</span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/lojas/cadastrar}">
@@ -47,7 +52,8 @@
             </li>
         </ul>
 
-        <ul class="nav nav-pills">
+        <!-- Veículos: LOJA e ADMIN -->
+        <ul class="nav nav-pills" sec:authorize="hasAnyAuthority('LOJA','ADMIN')">
             <li class="nav-item"><span class="nav-link active">Veículos</span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/veiculos/cadastrar}">
@@ -61,7 +67,8 @@
             </li>
         </ul>
 
-        <ul class="nav nav-pills">
+        <!-- Propostas: CLIENTE and ADMIN -->
+        <ul class="nav nav-pills" sec:authorize="hasAnyAuthority('CLIENTE','ADMIN')">
             <li class="nav-item"><span class="nav-link active">Propostas</span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/propostas/cadastrar}">
@@ -74,6 +81,7 @@
                 </a>
             </li>
         </ul>
+
     </nav>
 </body>
 </html>

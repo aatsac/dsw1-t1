@@ -5,13 +5,16 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.Authentication;
 
 import br.ufscar.dc.dsw.domain.Veiculo;
+import br.ufscar.dc.dsw.security.UsuarioDetails;
 import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.service.spec.IVeiculoService;
 import br.ufscar.dc.dsw.service.spec.ILojaService;
@@ -35,30 +38,54 @@ public class VeiculoController {
     public String cadastrar(Veiculo veiculo) {
         return "veiculo/cadastro";
     }
+
+    private Loja getLojaLogada() {
+        UsuarioDetails ud = (UsuarioDetails)
+            SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (Loja) ud.getUsuario();
+    }
     
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("veiculos", veiculoService.buscarTodos());
+
+        // pega o usuário logado e sua role
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UsuarioDetails ud = (UsuarioDetails) auth.getPrincipal();
+        String role = ud.getAuthorities().iterator().next().getAuthority();
+
+        List<Veiculo> lista;
+        if ("ADMIN".equals(role)) {
+            // se for admin, lista todos
+            lista = veiculoService.buscarTodos();
+        } else {
+            // se for loja, lista só os da loja logada
+            Loja loja = (Loja) ud.getUsuario();
+            lista = veiculoService.buscarPorLoja(loja.getId());
+        }
+
+        model.addAttribute("veiculos", lista);
         return "veiculo/lista";
     }
     
-    @PostMapping("/salvar")
-    public String salvar(
-            @Valid Veiculo veiculo, 
-            BindingResult result, 
-            RedirectAttributes attr,
-            ModelMap model) {
-        
-        if (result.hasErrors()) {
-            model.addAttribute("lojas", listaLojas());
-            return "veiculo/cadastro";
-        }
-        
-        veiculoService.salvar(veiculo);
-        attr.addFlashAttribute("sucess", "Veículo inserido com sucesso.");
-        return "redirect:/veiculos/listar";
+@PostMapping("/salvar")
+public String salvar(
+        @Valid Veiculo veiculo,
+        BindingResult result,
+        RedirectAttributes attr,
+        ModelMap model) {
+    
+    if (result.hasErrors()) {
+        // Só reexibe o dropdown para o ADMIN, não para a loja
+        return "veiculo/cadastro";
     }
     
+    // força associação à loja logada:
+    veiculo.setLoja(getLojaLogada());
+    veiculoService.salvar(veiculo);
+    attr.addFlashAttribute("sucess", "Veículo inserido com sucesso.");
+    return "redirect:/veiculos/listar";
+}
+
     @GetMapping("/editar/{id}")
     public String preEditar(
             @PathVariable("id") Long id, 

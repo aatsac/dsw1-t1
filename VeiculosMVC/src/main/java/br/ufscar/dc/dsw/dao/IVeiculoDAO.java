@@ -1,16 +1,14 @@
-// br/ufscar/dc/dsw/dao/IVeiculoDAO.java
 package br.ufscar.dc.dsw.dao;
 
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import br.ufscar.dc.dsw.domain.Veiculo;
 
-@SuppressWarnings("unchecked")
-public interface IVeiculoDAO extends CrudRepository<Veiculo, Long> {
-    Veiculo findById(long id);
+public interface IVeiculoDAO extends JpaRepository<Veiculo, Long> {
+    List<Veiculo> findByModeloContaining(String modelo);
+    List<Veiculo> findAllByLojaId(Long lojaId);
     Veiculo findByPlaca(String placa);
-    List<Veiculo> findAll();
-    List<Veiculo> findByLojaCnpj(String cnpjLoja);
-    Veiculo save(Veiculo veiculo);
-    void deleteById(Long id);
+
 }
