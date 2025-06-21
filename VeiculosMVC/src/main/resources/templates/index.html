@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout2}">
 <head>
     <title>Index</title>
@@ -25,6 +25,7 @@
                     <table class="table table-striped" border="1">
                         <thead>
                             <tr>
+                                <th sec:authorize="hasAuthority('CLIENTE')" th:text="#{veiculo.proposta.label}"></th>
                                 <th th:text="#{veiculo.placa.label}"></th>
                                 <th th:text="#{veiculo.modelo.label}"></th>
                                 <th th:text="#{veiculo.chassi.label}"></th>
@@ -36,6 +37,9 @@
                         </thead>
                         <tbody>
                             <tr th:each="veiculo : ${veiculos}">
+                                <td sec:authorize="hasAuthority('CLIENTE')">
+                                <a th:href="@{/propostas/cadastrar(veiculoId=${veiculo.id})}">Fazer proposta</a>
+                                </td>
                                 <td th:text="${veiculo.placa}"></td>
                                 <td th:text="${veiculo.modelo}"></td>
                                 <td th:text="${veiculo.chassi}"></td>

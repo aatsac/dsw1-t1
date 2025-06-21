@@ -1,12 +1,13 @@
-<!-- cadastro.html -->
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8" />
 </head>
 <body>
   <section class="layout-content" layout:fragment="corpo">
-
+    <!-- Cabeçalho -->
     <nav class="navbar navbar-expand-md bg-light mb-3">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -14,126 +15,110 @@
           <span>Cadastrar/Editar Proposta</span>
         </li>
       </ul>
-      <a class="btn btn-primary btn-md" th:href="@{/propostas/listar}" role="button">
-        <span class="oi oi-spreadsheet"></span>
-        <span>Listar Propostas</span>
+      <a class="btn btn-primary" th:href="@{/propostas/listar}">
+        <span class="oi oi-spreadsheet"></span> Listar Propostas
       </a>
     </nav>
 
     <div class="container">
       <div th:replace="~{fragments/alert}"></div>
 
+      <!-- FORMULÁRIO -->
       <form th:object="${proposta}"
-            th:action="${proposta.id} == null
-                        ? @{/propostas/salvar}
+            th:action="${proposta.id} == null 
+                        ? @{/propostas/salvar} 
                         : @{/propostas/editar}"
             method="post">
 
+        <!-- Campos ocultos comuns -->
         <input type="hidden" th:field="*{id}" />
+        <input type="hidden" name="cliente.id"
+              th:value="${#authentication.principal.usuario.id}" />
+        <input type="hidden" th:field="*{veiculo.id}" />
+        <input type="hidden" th:field="*{dataCompra}"
+              th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 
-        <div class="form-row">
-          <!-- Cliente -->
-          <div class="form-group col-md-6">
-            <label for="cliente">Cliente</label>
-            <select id="cliente"
-                    class="form-control"
-                    th:field="*{cliente}"
-                    th:classappend="${#fields.hasErrors('cliente')}? 'is-invalid'">
-              <option value="" disabled>Selecione</option>
-              <option th:each="c : ${clientes}"
-                      th:value="${c.id}"
-                      th:text="${c.nome + ' (' + c.cpf + ')'}">
-              </option>
-            </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('cliente')}">
-              <span th:errors="*{cliente}"></span>
-            </div>
-          </div>
-
-          <!-- Veículo -->
-          <div class="form-group col-md-6">
-            <label for="veiculo">Veículo</label>
-            <select id="veiculo"
-                    class="form-control"
-                    th:field="*{veiculo}"
-                    th:classappend="${#fields.hasErrors('veiculo')}? 'is-invalid'">
-              <option value="" disabled>Selecione</option>
-              <option th:each="v : ${veiculos}"
-                      th:value="${v.id}"
-                      th:text="${v.modelo + ' - ' + v.placa}">
-              </option>
-            </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('veiculo')}">
-              <span th:errors="*{veiculo}"></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
+        <!--============================-->
+        <!-- SEÇÃO PARA CLIENTE:       -->
+        <!-- - sempre vê/edita valor e descrição -->
+        <!-- - status fica oculto e pré-definido -->
+        <!-- - botão muda conforme novo ou edição -->
+        <!--============================-->
+        <div sec:authorize="hasAuthority('CLIENTE')">
           <!-- Valor -->
-          <div class="form-group col-md-4">
+          <div class="mb-3">
             <label for="valor">Valor (R$)</label>
-            <input type="number"
-                   step="0.01"
-                   id="valor"
-                   class="form-control"
-                   th:field="*{valor}"
-                   placeholder="00000.00"
-                   th:classappend="${#fields.hasErrors('valor')}? 'is-invalid'">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('valor')}">
+            <input type="number" id="valor" step="0.01"
+                  th:field="*{valor}" class="form-control"
+                  placeholder="Ex: 45000.00"
+                  th:classappend="${#fields.hasErrors('valor')}? 'is-invalid'">
+            <div class="invalid-feedback"
+                th:if="${#fields.hasErrors('valor')}">
               <span th:errors="*{valor}"></span>
             </div>
           </div>
 
-          <!-- Data da Proposta -->
-          <div class="form-group col-md-4">
-            <label for="dataCompra">Data</label>
-            <input type="date"
-                   id="dataCompra"
-                   class="form-control"
-                   th:field="*{dataCompra}"
-                   th:classappend="${#fields.hasErrors('dataCompra')}? 'is-invalid'">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('dataCompra')}">
-              <span th:errors="*{dataCompra}"></span>
+          <!-- Condições de pagamento -->
+          <div class="mb-3">
+            <label for="condicoesPgto">Condições de Pagamento</label>
+            <textarea id="condicoesPgto" rows="3"
+                      th:field="*{condicoesPgto}"
+                      class="form-control"
+                      placeholder="Descreva as condições"
+                      th:classappend="${#fields.hasErrors('condicoesPgto')}? 'is-invalid'"></textarea>
+            <div class="invalid-feedback"
+                th:if="${#fields.hasErrors('condicoesPgto')}">
+              <span th:errors="*{condicoesPgto}"></span>
             </div>
           </div>
 
-          <!-- Status -->
-          <div class="form-group col-md-4">
-            <label for="status">Status</label>
-            <select id="status"
+          <!-- Status sempre 'ABERTO' para cliente -->
+          <input type="hidden" th:field="*{status}" th:value="'ABERTO'" />
+
+          <!-- Botão de ação para cliente -->
+          <div class="text-right mb-4">
+            <button type="submit" class="btn btn-primary"
+                    th:text="${proposta.id} == null 
+                            ? 'Salvar Proposta' 
+                            : 'Atualizar Proposta'">
+            </button>
+          </div>
+        </div>
+
+        <!--============================-->
+        <!-- SEÇÃO PARA LOJA:          -->
+        <!-- - só aparece em edição -->
+        <!-- - só vê/edita o status      -->
+        <!-- - não vê valor nem descrição-->
+        <!--============================-->
+        <div sec:authorize="hasAuthority('LOJA')" th:if="${proposta.id} != null">
+          <!-- Status da proposta -->
+          <div class="mb-3">
+            <label for="status">Status da Proposta</label>
+            <select id="status" th:field="*{status}"
                     class="form-control"
-                    th:field="*{status}"
                     th:classappend="${#fields.hasErrors('status')}? 'is-invalid'">
               <option value="" disabled>Selecione</option>
               <option th:each="s : ${statusList}"
                       th:value="${s}"
                       th:text="${s}"></option>
             </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
+            <div class="invalid-feedback"
+                th:if="${#fields.hasErrors('status')}">
               <span th:errors="*{status}"></span>
             </div>
           </div>
-        </div>
 
-        <!-- Condições de Pagamento -->
-        <div class="form-group">
-          <label for="condicoesPgto">Condições de Pagamento</label>
-          <textarea id="condicoesPgto"
-                    class="form-control"
-                    th:field="*{condicoesPgto}"
-                    rows="3"
-                    placeholder="Descreva as condições"
-                    th:classappend="${#fields.hasErrors('condicoesPgto')}? 'is-invalid'"></textarea>
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('condicoesPgto')}">
-            <span th:errors="*{condicoesPgto}"></span>
+          <!-- Botão de atualização para loja -->
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary">
+              Atualizar Status
+            </button>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
       </form>
     </div>
-
   </section>
 </body>
 </html>

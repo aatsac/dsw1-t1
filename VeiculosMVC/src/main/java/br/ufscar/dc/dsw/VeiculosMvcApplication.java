@@ -58,6 +58,17 @@ public class VeiculosMvcApplication {
 			c1.setDataNascimento(LocalDate.of(1990, 1, 1));
 			clienteDAO.save(c1);
 
+			Cliente c2 = new Cliente();
+			c2.setEmail("fulano@email.com");
+			c2.setPassword((encoder.encode("123456")));
+			c2.setNome("Fulano de Tal");
+			c2.setPapel("CLIENTE");
+			c2.setCpf("987.654.321-00");
+			c2.setTelefone("0987654321");
+			c2.setSexo(Cliente.Sexo.F);
+			c2.setDataNascimento(LocalDate.of(1985, 5, 15));
+			clienteDAO.save(c2);
+
 			Veiculo v1 = new Veiculo();
 			v1.setPlaca("ABC1234");
 			v1.setModelo("Fusca");
@@ -69,6 +80,18 @@ public class VeiculosMvcApplication {
 			v1.setLoja(l1);
 			v1.setFotos(null);
 			veiculoDAO.save(v1);
+
+			Veiculo v2 = new Veiculo();
+			v2.setPlaca("XYZ5678");
+			v2.setModelo("Civic");
+			v2.setChassi("1HGCM82633A123456");
+			v2.setAno(2020);
+			v2.setQuilometragem(15000);
+			v2.setDescricao("Honda Civic 2020, excelente estado, com garantia.");
+			v2.setValor(BigDecimal.valueOf(90000));
+			v2.setLoja(l1);
+			v2.setFotos(null);
+			veiculoDAO.save(v2);
 
 			Proposta p1 = new Proposta();
 			p1.setCliente(c1);

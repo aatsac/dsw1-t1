@@ -1,11 +1,14 @@
 // br/ufscar/dc/dsw/controller/PropostaController.java
 package br.ufscar.dc.dsw.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,7 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Proposta;
 import br.ufscar.dc.dsw.domain.Cliente;
+import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.domain.Veiculo;
+import br.ufscar.dc.dsw.security.UsuarioDetails;
 import br.ufscar.dc.dsw.service.spec.IPropostaService;
 import br.ufscar.dc.dsw.service.spec.IClienteService;
 import br.ufscar.dc.dsw.service.spec.IVeiculoService;
@@ -47,27 +52,57 @@ public class PropostaController {
         return Proposta.Status.values();
     }
 
+        private Cliente getClienteLogado() {
+        UsuarioDetails ud = (UsuarioDetails)
+            SecurityContextHolder.getContext()
+                                 .getAuthentication()
+                                 .getPrincipal();
+        return (Cliente) ud.getUsuario();
+    }
+
     @GetMapping("/cadastrar")
-    public String cadastrar(Proposta proposta) {
+    public String cadastrar(Long veiculoId, Proposta proposta) {
+        proposta.setCliente(getClienteLogado());
+        proposta.setDataCompra(java.time.LocalDate.now());
+        proposta.setVeiculo(veiculoService.buscarPorId(veiculoId));
+        proposta.setStatus(Proposta.Status.ABERTO);
         return "proposta/cadastro";
     }
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("propostas", propostaService.buscarTodos());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+
+        // Se não estiver autenticado com nosso UserDetails, redireciona ao login
+        if (!(principal instanceof UsuarioDetails)) {
+            return "redirect:/login";
+        }
+
+        UsuarioDetails ud = (UsuarioDetails) principal;
+        Object usuario = ud.getUsuario();
+        List<Proposta> lista = new ArrayList<>();
+
+        if (usuario instanceof Loja) {
+            // Lojistas veem todas as propostas
+            lista = propostaService.buscarTodos();
+        } else if (usuario instanceof Cliente) {
+            // Clientes veem apenas suas próprias propostas
+            Cliente cliente = (Cliente) usuario;
+            lista = propostaService.buscarPorCliente(cliente.getId());
+        }
+
+        model.addAttribute("propostas", lista);
         return "proposta/lista";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Proposta proposta,
-                         BindingResult result,
-                         ModelMap model,
-                         RedirectAttributes attr) {
+    public String salvar(@Valid Proposta proposta, BindingResult result, ModelMap model, RedirectAttributes attr) {
         if (result.hasErrors()) {
-            model.addAttribute("clientes", listaClientes());
-            model.addAttribute("veiculos", listaVeiculos());
             return "proposta/cadastro";
         }
+        proposta.setCliente(getClienteLogado());
+        proposta.setDataCompra(java.time.LocalDate.now());
         propostaService.salvar(proposta);
         attr.addFlashAttribute("sucess", "Proposta enviada com sucesso.");
         return "redirect:/propostas/listar";
@@ -82,17 +117,39 @@ public class PropostaController {
     }
 
     @PostMapping("/editar")
-    public String editar(@Valid Proposta proposta,
-                         BindingResult result,
-                         ModelMap model,
-                         RedirectAttributes attr) {
+    public String editar(
+            @ModelAttribute("proposta") Proposta proposta,
+            BindingResult result,
+            ModelMap model,
+            RedirectAttributes attr) {
+
+        // Recupera o usuário logado
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UsuarioDetails ud = (UsuarioDetails) auth.getPrincipal();
+        Object usuario = ud.getUsuario();
+
+        // Se for LOJA, atualiza apenas o status
+        if (usuario instanceof Loja) {
+            // Busca a proposta original no banco
+            Proposta existente = propostaService.buscarPorId(proposta.getId());
+            existente.setStatus(proposta.getStatus());
+            propostaService.salvar(existente);
+            attr.addFlashAttribute("sucess", "Status atualizado com sucesso.");
+            return "redirect:/propostas/listar";
+        }
+
+        // Caso CONTRÁRIO (é CLIENTE), faz validação normal de valor/condições
         if (result.hasErrors()) {
-            model.addAttribute("clientes", listaClientes());
-            model.addAttribute("veiculos", listaVeiculos());
+            // Recarrega a lista de status para o select, caso dê erro
+            model.addAttribute("statusList", Proposta.Status.values());
             return "proposta/cadastro";
         }
+
         propostaService.salvar(proposta);
-        attr.addFlashAttribute("sucess", "Proposta atualizada com sucesso.");
+        attr.addFlashAttribute("sucess",
+            proposta.getId() == null
+                ? "Proposta enviada com sucesso."
+                : "Proposta atualizada com sucesso.");
         return "redirect:/propostas/listar";
     }
 

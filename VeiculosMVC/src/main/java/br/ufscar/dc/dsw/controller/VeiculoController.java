@@ -51,20 +51,12 @@ public class VeiculoController {
     @GetMapping("/listar")
     public String listar(ModelMap model) {
 
-        // pega o usuário logado e sua role
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UsuarioDetails ud = (UsuarioDetails) auth.getPrincipal();
-        String role = ud.getAuthorities().iterator().next().getAuthority();
 
         List<Veiculo> lista;
-        if ("ADMIN".equals(role)) {
-            // se for admin, lista todos
-            lista = veiculoService.buscarTodos();
-        } else {
-            // se for loja, lista só os da loja logada
             Loja loja = (Loja) ud.getUsuario();
             lista = veiculoService.buscarPorLoja(loja.getId());
-        }
 
         model.addAttribute("veiculos", lista);
         return "veiculo/lista";
@@ -75,7 +67,6 @@ public class VeiculoController {
         if (result.hasErrors()) {
             return "veiculo/cadastro";
         }
-        // Garante que o veículo vai para a loja certa, ignorando qualquer valor vindo do form
         veiculo.setLoja(getLojaLogada());
         veiculoService.salvar(veiculo);
         attr.addFlashAttribute("sucess", "Veículo salvo com sucesso.");
