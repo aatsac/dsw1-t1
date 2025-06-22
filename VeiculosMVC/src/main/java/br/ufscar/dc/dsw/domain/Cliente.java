@@ -4,7 +4,7 @@ package br.ufscar.dc.dsw.domain;
 import java.time.LocalDate;
 import java.util.List;
 
-import br.ufscar.dc.dsw.validation.UniqueCpf;
+//import br.ufscar.dc.dsw.validation.UniqueCpf;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,14 +23,14 @@ import jakarta.validation.constraints.Pattern;
 public class Cliente extends Usuario {
 
     @NotBlank
-    @UniqueCpf(message = "{Unique.cliente.cpf}")
+    //@UniqueCpf(message = "{Unique.cliente.cpf}")
     @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "{Pattern.cliente.cpf}")
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
 
     @NotBlank
     @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{3,4}", message = "{Pattern.cliente.telefone}")
-    @Column(length = 14)
+    @Column(length = 15)
     private String telefone;
 
     public enum Sexo { M, F, O }

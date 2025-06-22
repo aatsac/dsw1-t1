@@ -67,7 +67,6 @@
           <label for="cpf" th:text="#{cpf.label}">CPF</label>
           <input type="text" id="cpf" class="form-control"
                  th:field="*{cpf}" th:placeholder="#{cliente.cpf.placeholder}"
-                 th:readonly="${cliente.id != null}"
                  data-mask="000.000.000-00"
                  th:classappend="${#fields.hasErrors('cpf')}? 'is-invalid'">
           <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}">

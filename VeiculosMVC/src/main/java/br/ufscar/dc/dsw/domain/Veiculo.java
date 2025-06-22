@@ -3,8 +3,8 @@ package br.ufscar.dc.dsw.domain;
 import java.math.BigDecimal;
 import java.util.List;
 
-import br.ufscar.dc.dsw.validation.UniqueChassi;
-import br.ufscar.dc.dsw.validation.UniquePlaca;
+//import br.ufscar.dc.dsw.validation.UniqueChassi;
+//import br.ufscar.dc.dsw.validation.UniquePlaca;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,7 +19,7 @@ import jakarta.validation.constraints.Size;
 public class Veiculo extends AbstractEntity<Long> {
 
     @NotBlank
-    @UniquePlaca(message = "Unique.veiculo.placa")
+    //@UniquePlaca(message = "Unique.veiculo.placa")
     @Pattern(regexp = "[A-Z]{3}[0-9][A-Z0-9][0-9]{2}", message = "{Pattern.veiculo.placa}")
     @Column(nullable = false, unique = true, length = 10)
     private String placa;
@@ -30,7 +30,7 @@ public class Veiculo extends AbstractEntity<Long> {
     private String modelo;
 
     @NotBlank
-    @UniqueChassi(message = "Unique.veiculo.chassi")
+    //@UniqueChassi(message = "Unique.veiculo.chassi")
     @Size(max = 17)
     @Column(nullable = false, unique = true, length = 17)
     private String chassi;
