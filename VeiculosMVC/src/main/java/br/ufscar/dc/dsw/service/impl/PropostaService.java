@@ -37,6 +37,11 @@ public class PropostaService implements IPropostaService {
     }
 
     @Override
+    public boolean existePropostaAberta(Long clienteId, Long veiculoId) {
+        return dao.existsByClienteIdAndStatusAndVeiculoId(clienteId, Proposta.Status.ABERTO, veiculoId);
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public void salvar(Proposta proposta) {
         dao.save(proposta);

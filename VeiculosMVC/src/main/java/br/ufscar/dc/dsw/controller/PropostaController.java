@@ -1,6 +1,7 @@
 // br/ufscar/dc/dsw/controller/PropostaController.java
 package br.ufscar.dc.dsw.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,12 +98,31 @@ public class PropostaController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Proposta proposta, BindingResult result, ModelMap model, RedirectAttributes attr) {
+    public String salvar(
+            @Valid Proposta proposta, 
+            BindingResult result, 
+            ModelMap model, 
+            RedirectAttributes attr) {
+        
+        Cliente cliente = getClienteLogado();
+        Long veiculoId = proposta.getVeiculo().getId();
+
+        // 1) Se for criação (id == null) e já existir proposta em aberto -> erro
+        if (proposta.getId() == null && propostaService.existePropostaAberta(cliente.getId(), veiculoId)) {
+            result.rejectValue("veiculo",
+                   "openProposal",
+                   "Você já possui uma proposta em aberto para este veículo.");
+        }
+
+        // 2) Se houver erros (validação ou regra de negócio), retorna ao formulário
         if (result.hasErrors()) {
+            model.addAttribute("statusList", Proposta.Status.values());
             return "proposta/cadastro";
         }
-        proposta.setCliente(getClienteLogado());
-        proposta.setDataCompra(java.time.LocalDate.now());
+
+        // 3) Continua salvando normalmente
+        proposta.setCliente(cliente);
+        proposta.setDataCompra(LocalDate.now());
         propostaService.salvar(proposta);
         attr.addFlashAttribute("sucess", "Proposta enviada com sucesso.");
         return "redirect:/propostas/listar";

@@ -29,5 +29,13 @@
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/ILojaService.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IPropostaService.java
 /home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IVeiculoService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCNPJ.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCNPJValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueChassi.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueChassiValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCnpj.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCnpjValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCpf.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCpfValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmail.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmailValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniquePlaca.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniquePlacaValidator.java

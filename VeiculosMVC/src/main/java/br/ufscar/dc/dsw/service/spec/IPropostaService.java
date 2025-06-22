@@ -9,6 +9,7 @@ public interface IPropostaService {
     List<Proposta> buscarTodos();
     List<Proposta> buscarPorCliente(Long idCliente);
     List<Proposta> buscarPorVeiculo(Long idVeiculo);
+    boolean existePropostaAberta(Long clienteId, Long veiculoId);
     void salvar(Proposta proposta);
     void excluir(Long id);
 }

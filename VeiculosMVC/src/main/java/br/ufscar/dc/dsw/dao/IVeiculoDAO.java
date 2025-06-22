@@ -10,5 +10,6 @@ public interface IVeiculoDAO extends JpaRepository<Veiculo, Long> {
     List<Veiculo> findByModeloContaining(String modelo);
     List<Veiculo> findAllByLojaId(Long lojaId);
     Veiculo findByPlaca(String placa);
+    Veiculo findByChassi(String chassi);
 
 }

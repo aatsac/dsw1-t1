@@ -1,7 +1,7 @@
 // br/ufscar/dc/dsw/domain/Loja.java
 package br.ufscar.dc.dsw.domain;
 
-import br.ufscar.dc.dsw.validation.UniqueCNPJ;
+import br.ufscar.dc.dsw.validation.UniqueCnpj;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -16,12 +16,11 @@ import java.util.List;
 @Entity
 @Table(name = "Loja")
 @PrimaryKeyJoinColumn(name = "id")
-@UniqueCNPJ(message = "{Unique.loja.CNPJ}")
 public class Loja extends Usuario {
 
     @NotBlank
+    @UniqueCnpj(message = "{Unique.loja.cnpj}")
     @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}", message = "{Pattern.loja.cnpj}")
-    //@UniqueCNPJ
     @Column(nullable = false, unique = true, length = 18)
     private String cnpj;
 

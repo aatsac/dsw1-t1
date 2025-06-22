@@ -6,11 +6,11 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Constraint(validatedBy = UniqueCNPJValidator.class)
-@Target({ElementType.TYPE})
+@Constraint(validatedBy = UniqueCpfValidator.class)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UniqueCNPJ {
-    String message() default "CNPJ já cadastrado";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+public @interface UniqueCpf {
+ String message() default "CPF is already registered";
+ Class<?>[] groups() default { };
+ Class<? extends Payload>[] payload() default { };
 }
