@@ -14,10 +14,10 @@
         <ul>
             <li><a th:href="@{/home}"><span th:text="#{index.message.3}"></a></li>
         </ul>
-        <h2 class="text-left" th:text="#{veiculo.lista.label}"></h2>
+        <h2 class="text-left" th:text="#{veiculo.listar.titulo}"></h2>
         <form method="get" th:action="@{/}" class="form-inline my-2 my-lg-0">
-            <input type="text" name="modelo" class="form-control mr-sm-2" placeholder="Digite o modelo">
-            <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Pesquisar</button>
+            <input type="text" name="modelo" class="form-control mr-sm-2" th:placeholder=#{index.pesquisar.placeholder} />
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" th:text="#{index.pesquisar}">Pesquisar</button>
         </form>
         <section class="layout-content" layout:fragment="corpo">
             <div class="container" id="listagem" >
@@ -25,20 +25,20 @@
                     <table class="table table-striped" border="1">
                         <thead>
                             <tr>
-                                <th sec:authorize="hasAuthority('CLIENTE')" th:text="#{veiculo.proposta.label}"></th>
-                                <th th:text="#{veiculo.placa.label}"></th>
-                                <th th:text="#{veiculo.modelo.label}"></th>
-                                <th th:text="#{veiculo.chassi.label}"></th>
-                                <th th:text="#{veiculo.ano.label}"></th>
-                                <th th:text="#{veiculo.quilometragem.label}"></th>
-                                <th th:text="#{veiculo.valor.label}"></th>
-                                <th th:text="#{veiculo.descricao.label}"></th>
+                                <th sec:authorize="hasAuthority('CLIENTE')" th:text="#{proposta.label}"></th>
+                                <th th:text="#{placa.label}"></th>
+                                <th th:text="#{modelo.label}"></th>
+                                <th th:text="#{chassi.label}"></th>
+                                <th th:text="#{ano.label}"></th>
+                                <th th:text="#{quilometragem.label}"></th>
+                                <th th:text="#{valor.label}"></th>
+                                <th th:text="#{descricao.label}"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="veiculo : ${veiculos}">
                                 <td sec:authorize="hasAuthority('CLIENTE')">
-                                <a th:href="@{/propostas/cadastrar(veiculoId=${veiculo.id})}">Fazer proposta</a>
+                                <a th:href="@{/propostas/cadastrar(veiculoId=${veiculo.id})}" th:text="#{proposta.cadastrar.label}"></a>
                                 </td>
                                 <td th:text="${veiculo.placa}"></td>
                                 <td th:text="${veiculo.modelo}"></td>

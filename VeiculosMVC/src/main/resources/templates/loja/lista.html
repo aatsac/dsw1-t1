@@ -11,12 +11,12 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <i class="oi oi-caret-right"></i>
-          <span>Lista de Lojas</span>
+          <span th:text="#{loja.listar.titulo}">Lista de Lojas</span>
         </li>
       </ul>
       <a class="btn btn-primary btn-md" th:href="@{/lojas/cadastrar}" role="button">
         <span class="oi oi-plus"></span>
-        <span>Nova Loja</span>
+        <span th:text="#{loja.nova.button}">Nova Loja</span>
       </a>
     </nav>
 
@@ -28,10 +28,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Nome</th>
-              <th>CNPJ</th>
-              <th>Descrição</th>
-              <th>Ações</th>
+              <th th:text="#{nome.label}">Nome</th>
+              <th th:text="#{cnpj.label}">CNPJ</th>
+              <th th:text="#{descricao.label}">Descrição</th>
+              <th th:text="#{acoes.label}">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -44,14 +44,16 @@
                 <a
                   class="btn btn-info btn-sm"
                   th:href="@{/lojas/editar/{id}(id=${loja.id})}"
+                  th:title="#{editar.label}"
                   role="button">
                   <span class="oi oi-brush"></span>
                 </a>
                 <a
                   class="btn btn-danger btn-sm"
                   th:href="@{/lojas/excluir/{id}(id=${loja.id})}"
+                  th:title="#{excluir.label}"
                   role="button"
-                  onclick="return confirm('Deseja realmente excluir?');">
+                  th:onclick="|return confirm('#{excluir.confirm}');|">
                   <span class="oi oi-circle-x"></span>
                 </a>
               </td>

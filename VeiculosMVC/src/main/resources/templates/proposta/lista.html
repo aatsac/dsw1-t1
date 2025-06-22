@@ -11,7 +11,7 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <i class="oi oi-caret-right"></i>
-          <span>Lista de Propostas</span>
+          <span th:text="#{proposta.listar.titulo}">Lista de Propostas</span>
         </li>
       </ul>
     </nav>
@@ -23,16 +23,16 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Cliente</th>
-              <th>Veículo</th>
-              <th>Valor (R$)</th>
-              <th>Data</th>
-              <th>Status</th>
-              <th>Ações</th>
+              <th th:text="#{cliente.label}">Cliente</th>
+              <th th:text="#{veiculo.label}">Veículo</th>
+              <th th:text="#{valor.label}">Valor (R$)</th>
+              <th th:text="#{data.label}">Data</th>
+              <th th:text="#{status.label}">Status</th>
+              <th th:text="#{acoes.label}">Ações</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="p : ${propostas}">
+            <tr th:each="p : ${propostas}" th:with="statusKey='proposta.status.' + p.status">
               <td th:text="${p.id}">1</td>
               <td th:text="${p.cliente.nome}">Fulano</td>
               <td th:text="${p.veiculo.modelo + ' (' + p.veiculo.placa + ')'}">Modelo</td>
@@ -42,13 +42,15 @@
               <td>
                 <a class="btn btn-info btn-sm"
                    th:href="@{/propostas/editar/{id}(id=${p.id})}"
-                   role="button">
+                   role="button"
+                   th:title="#{editar.label}">
                   <span class="oi oi-brush"></span>
                 </a>
                 <a class="btn btn-danger btn-sm"
                    th:href="@{/propostas/excluir/{id}(id=${p.id})}"
                    role="button"
-                   onclick="return confirm('Confirma exclusão desta proposta?');">
+                   th:title="#{excluir.label}"
+                   th:onclick="|return confirm('#{excluir.confirm}');|">
                   <span class="oi oi-circle-x"></span>
                 </a>
               </td>

@@ -12,8 +12,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 
 @SuppressWarnings("serial")
 @Entity
@@ -21,12 +21,14 @@ import jakarta.validation.constraints.Size;
 @PrimaryKeyJoinColumn(name = "id")
 public class Cliente extends Usuario {
 
-    @NotBlank(message = "{NotBlank.cliente.cpf}")
-    @Size(min = 14, max = 14)
+    @NotBlank
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "{Pattern.cliente.cpf}")
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
 
-    @Column(length = 20)
+    @NotBlank
+    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{3,4}", message = "{Pattern.cliente.telefone}")
+    @Column(length = 14)
     private String telefone;
 
     public enum Sexo { M, F, O }
@@ -35,7 +37,8 @@ public class Cliente extends Usuario {
     @Column(nullable = false, length = 1)
     private Sexo sexo = Sexo.O;
 
-    @PastOrPresent
+
+    @Past(message = "{Past.cliente.dataNascimento}")
     private LocalDate dataNascimento;
 
     @OneToMany(mappedBy = "cliente")

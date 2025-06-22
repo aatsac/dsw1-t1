@@ -12,11 +12,12 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <i class="oi oi-caret-right"></i>
-          <span>Cadastrar/Editar Proposta</span>
+          <span th:text="#{proposta.cadastrar.titulo}">Cadastrar/Editar Proposta</span>
         </li>
       </ul>
       <a class="btn btn-primary" th:href="@{/propostas/listar}">
-        <span class="oi oi-spreadsheet"></span> Listar Propostas
+        <span class="oi oi-spreadsheet"></span>
+        <span th:text="#{proposta.listar.titulo}">Listar Propostas</span>
       </a>
     </nav>
 
@@ -30,88 +31,83 @@
                         : @{/propostas/editar}"
             method="post">
 
-        <!-- Campos ocultos comuns -->
+        <!-- campos comuns -->
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" name="cliente.id"
-              th:value="${#authentication.principal.usuario.id}" />
+               th:value="${#authentication.principal.usuario.id}" />
         <input type="hidden" th:field="*{veiculo.id}" />
-        <input type="hidden" th:field="*{dataCompra}"
-              th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 
-        <!--============================-->
-        <!-- SEÇÃO PARA CLIENTE:       -->
-        <!-- - sempre vê/edita valor e descrição -->
-        <!-- - status fica oculto e pré-definido -->
-        <!-- - botão muda conforme novo ou edição -->
-        <!--============================-->
+        <!-- CLIENTE vê/edita apenas valor e descrições e só pode SALVAR quando for NOVO -->
         <div sec:authorize="hasAuthority('CLIENTE')">
-          <!-- Valor -->
-          <div class="mb-3">
-            <label for="valor">Valor (R$)</label>
-            <input type="number" id="valor" step="0.01"
-                  th:field="*{valor}" class="form-control"
-                  placeholder="Ex: 45000.00"
-                  th:classappend="${#fields.hasErrors('valor')}? 'is-invalid'">
-            <div class="invalid-feedback"
-                th:if="${#fields.hasErrors('valor')}">
-              <span th:errors="*{valor}"></span>
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="valor" th:text="#{valor.label}">Valor (R$)</label>
+              <input type="number"
+                     id="valor"
+                     step="0.01"
+                     th:field="*{valor}"
+                     class="form-control"
+                     th:placeholder="#{proposta.valor.placeholder}"
+                     th:classappend="${#fields.hasErrors('valor')}? 'is-invalid'">
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('valor')}">
+                <span th:errors="*{valor}"></span>
+              </div>
             </div>
           </div>
 
-          <!-- Condições de pagamento -->
-          <div class="mb-3">
-            <label for="condicoesPgto">Condições de Pagamento</label>
-            <textarea id="condicoesPgto" rows="3"
-                      th:field="*{condicoesPgto}"
-                      class="form-control"
-                      placeholder="Descreva as condições"
-                      th:classappend="${#fields.hasErrors('condicoesPgto')}? 'is-invalid'"></textarea>
-            <div class="invalid-feedback"
-                th:if="${#fields.hasErrors('condicoesPgto')}">
-              <span th:errors="*{condicoesPgto}"></span>
+          <div class="row mb-3">
+            <div class="col-12">
+              <label for="condicoesPgto" th:text="#{condicoesPgto.label}">Condições de Pagamento</label>
+              <textarea id="condicoesPgto"
+                        th:field="*{condicoesPgto}"
+                        class="form-control"
+                        rows="3"
+                        th:placeholder="#{proposta.condicoesPgto.placeholder}"
+                        th:classappend="${#fields.hasErrors('condicoesPgto')}? 'is-invalid'"></textarea>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('condicoesPgto')}">
+                <span th:errors="*{condicoesPgto}"></span>
+              </div>
             </div>
           </div>
 
-          <!-- Status sempre 'ABERTO' para cliente -->
+          <!-- status e data ficam escondidos para o cliente; pré-definidos -->
           <input type="hidden" th:field="*{status}" th:value="'ABERTO'" />
+          <input type="hidden" th:field="*{dataCompra}"
+                 th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 
-          <!-- Botão de ação para cliente -->
+          <!-- botão de salvar só aparece para cliente em NOVO -->
           <div class="text-right mb-4">
             <button type="submit" class="btn btn-primary"
-                    th:text="${proposta.id} == null 
-                            ? 'Salvar Proposta' 
-                            : 'Atualizar Proposta'">
+                    th:if="${proposta.id} == null"
+                    th:text="#{proposta.salvar.button}">
+              Salvar Proposta
             </button>
           </div>
         </div>
 
-        <!--============================-->
-        <!-- SEÇÃO PARA LOJA:          -->
-        <!-- - só aparece em edição -->
-        <!-- - só vê/edita o status      -->
-        <!-- - não vê valor nem descrição-->
-        <!--============================-->
+        <!-- LOJA vê/edita apenas o campo status e só em edição (não em cadastro) -->
         <div sec:authorize="hasAuthority('LOJA')" th:if="${proposta.id} != null">
-          <!-- Status da proposta -->
-          <div class="mb-3">
-            <label for="status">Status da Proposta</label>
-            <select id="status" th:field="*{status}"
-                    class="form-control"
-                    th:classappend="${#fields.hasErrors('status')}? 'is-invalid'">
-              <option value="" disabled>Selecione</option>
-              <option th:each="s : ${statusList}"
-                      th:value="${s}"
-                      th:text="${s}"></option>
-            </select>
-            <div class="invalid-feedback"
-                th:if="${#fields.hasErrors('status')}">
-              <span th:errors="*{status}"></span>
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="status" th:text="#{status.label}">Status da Proposta</label>
+              <select id="status"
+                      class="form-control"
+                      th:field="*{status}"
+                      th:classappend="${#fields.hasErrors('status')}? 'is-invalid'">
+                <option value="" disabled th:text="#{proposta.status.selecione}">Selecione</option>
+                <option th:value="ABERTO" th:text="#{proposta.status.aberto}">Aberto</option>
+                <option th:value="ACEITO" th:text="#{proposta.status.aceito}">Aceito</option>
+                <option th:value="NAO_ACEITO" th:text="#{proposta.status.recusado}">Recusado</option>
+              </select>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
+                <span th:errors="*{status}"></span>
+              </div>
             </div>
           </div>
 
-          <!-- Botão de atualização para loja -->
+          <!-- botão de atualizar só para loja em edição -->
           <div class="text-right">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" th:text="#{proposta.atualizar.status.button}">
               Atualizar Status
             </button>
           </div>

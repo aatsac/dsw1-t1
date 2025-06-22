@@ -10,12 +10,12 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <i class="oi oi-caret-right"></i>
-          <span>Cadastrar Loja</span>
+          <span th:text="#{loja.cadastrar.titulo}">Cadastrar Loja</span>
         </li>
       </ul>
       <a class="btn btn-primary btn-md" th:href="@{/lojas/listar}" role="button">
         <span class="oi oi-spreadsheet"></span>
-        <span>Listar Lojas</span>
+        <span th:text="#{loja.listar.titulo}">Listar Lojas</span>
       </a>
     </nav>
 
@@ -28,18 +28,18 @@
 
         <!-- Campo oculto para preencher papel -->
         <input type="hidden"
-               th:field="*{papel}"
+               th:field=*{papel}
                value="LOJA" />
 
         <!-- Nome (herdado de Usuario) -->
         <div class="form-group">
-          <label for="nome">Nome</label>
+          <label for="nome" th:text="#{nome.label}">Nome</label>
           <input
             type="text"
             id="nome"
             class="form-control"
             th:field="*{nome}"
-            placeholder="Nome da loja"
+            th:placeholder="#{loja.nome.placeholder}"
             th:classappend="${#fields.hasErrors('nome')}? 'is-invalid'">
           <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}">
             <span th:errors="*{nome}"></span>
@@ -48,13 +48,13 @@
 
         <!-- Email (herdado de Usuario) -->
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email" th:text="#{email.label}">E-mail</label>
           <input
             type="email"
             id="email"
             class="form-control"
             th:field="*{email}"
-            placeholder="seu@exemplo.com"
+            th:placeholder="#{email.placeholder}"
             th:classappend="${#fields.hasErrors('email')}? 'is-invalid'">
           <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}">
             <span th:errors="*{email}"></span>
@@ -63,13 +63,13 @@
 
         <!-- Password (herdado de Usuario) -->
         <div class="form-group">
-          <label for="password">Senha</label>
+          <label for="password" th:text="#{senha.label}">Senha</label>
           <input
             type="password"
             id="password"
             class="form-control"
             th:field="*{password}"
-            placeholder="Senha"
+            th:placeholder="#{senha.placeholder}"
             th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
           <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}">
             <span th:errors="*{password}"></span>
@@ -78,13 +78,13 @@
 
         <!-- CNPJ -->
         <div class="form-group">
-          <label for="cnpj">CNPJ</label>
+          <label for="cnpj" th:text="#{cnpj.label}">CNPJ</label>
           <input
             type="text"
             id="cnpj"
             class="form-control"
             th:field="*{cnpj}"
-            placeholder="__.___.___/____-__"
+            th:placeholder="#{loja.cnpj.placeholder}"
             th:readonly="${loja.id != null}"
             data-mask="00.000.000/0000-00"
             data-mask-reverse="true"
@@ -96,13 +96,13 @@
 
         <!-- Descrição -->
         <div class="form-group">
-          <label for="descricao">Descrição</label>
+          <label for="descricao" th:text="#{descricao.label}">Descrição</label>
           <textarea
             id="descricao"
             class="form-control"
             th:field="*{descricao}"
             rows="3"
-            placeholder="Descreva sua loja"
+            th:placeholder="#{loja.descricao.placeholder}"
             th:classappend="${#fields.hasErrors('descricao')}? 'is-invalid'"></textarea>
           <div class="invalid-feedback" th:if="${#fields.hasErrors('descricao')}">
             <span th:errors="*{descricao}"></span>
@@ -110,7 +110,7 @@
         </div>
 
         <input type="hidden" th:field="*{id}" />
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="submit" class="btn btn-primary" th:text="#{salvar.button}">Salvar</button>
       </form>
     </div>
 

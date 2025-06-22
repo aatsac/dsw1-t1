@@ -8,7 +8,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -20,7 +20,8 @@ import java.util.List;
 public class Loja extends Usuario {
 
     @NotBlank
-    @Size(min = 18, max = 18, message = "{Size.loja.CNPJ}")
+    @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}", message = "{Pattern.loja.cnpj}")
+    //@UniqueCNPJ
     @Column(nullable = false, unique = true, length = 18)
     private String cnpj;
 

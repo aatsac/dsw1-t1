@@ -1,12 +1,14 @@
-// br/ufscar/dc/dsw/domain/Veiculo.java
 package br.ufscar.dc.dsw.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @SuppressWarnings("serial")
@@ -15,7 +17,7 @@ import jakarta.validation.constraints.Size;
 public class Veiculo extends AbstractEntity<Long> {
 
     @NotBlank
-    @Size(max = 10)
+    @Pattern(regexp = "[A-Z]{3}[0-9][A-Z0-9][0-9]{2}", message = "{Pattern.veiculo.placa}")
     @Column(nullable = false, unique = true, length = 10)
     private String placa;
 
@@ -29,8 +31,12 @@ public class Veiculo extends AbstractEntity<Long> {
     @Column(nullable = false, unique = true, length = 17)
     private String chassi;
 
+    @NotNull
+    @Max(value = 2026, message = "{Max.veiculo.ano}")
+    @Min(value = 1880, message = "{Min.veiculo.ano}")
     private Integer ano;
 
+    @NotNull
     private Integer quilometragem;
 
     @Column(columnDefinition = "TEXT")
@@ -45,9 +51,9 @@ public class Veiculo extends AbstractEntity<Long> {
 
     /**
      * Armazena o JSON das URLs das fotos, ex: ["url1","url2",...]
-     */
-    @Column(columnDefinition = "JSON")
-    private String fotos;
+     
+    //@Column(columnDefinition = "JSON")
+    private String fotos;*/
     
     @NotNull(message = "Loja é obrigatória")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -97,12 +103,12 @@ public class Veiculo extends AbstractEntity<Long> {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
-    public String getFotos() {
+    /*public String getFotos() {
         return fotos;
     }
     public void setFotos(String fotos) {
         this.fotos = fotos;
-    }
+    }*/
     public Loja getLoja() {
         return loja;
     }

@@ -11,12 +11,12 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <i class="oi oi-caret-right"></i>
-          <span>Cadastrar/Editar Veículo</span>
+          <span th:text="#{veiculo.cadastrar.titulo}"></span>
         </li>
       </ul>
       <a class="btn btn-primary btn-md" th:href="@{/veiculos/listar}" role="button">
         <span class="oi oi-spreadsheet"></span>
-        <span>Listar Veículos</span>
+        <span th:text="#{veiculo.listar.titulo}"></span>
       </a>
     </nav>
 
@@ -28,16 +28,14 @@
         <input type="hidden" th:field="*{id}" />
 
         <div class="form-row">
-
-
           <!-- Placa -->
           <div class="form-group col-md-6">
-            <label for="placa">Placa</label>
+            <label for="placa" th:text="#{placa.label}"></label>
             <input type="text"
                    id="placa"
                    class="form-control"
                    th:field="*{placa}"
-                   placeholder="ABC-1234"
+                   th:placeholder="#{veiculo.placa.placeholder}"
                    th:classappend="${#fields.hasErrors('placa')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('placa')}">
               <span th:errors="*{placa}"></span>
@@ -48,12 +46,12 @@
         <div class="form-row">
           <!-- Modelo -->
           <div class="form-group col-md-6">
-            <label for="modelo">Modelo</label>
+            <label for="modelo" th:text="#{modelo.label}"></label>
             <input type="text"
                    id="modelo"
                    class="form-control"
                    th:field="*{modelo}"
-                   placeholder="Ex: Corolla"
+                   th:placeholder="#{veiculo.modelo.placeholder}"
                    th:classappend="${#fields.hasErrors('modelo')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('modelo')}">
               <span th:errors="*{modelo}"></span>
@@ -62,12 +60,12 @@
 
           <!-- Chassi -->
           <div class="form-group col-md-6">
-            <label for="chassi">Chassi</label>
+            <label for="chassi" th:text="#{chassi.label}"></label>
             <input type="text"
                    id="chassi"
                    class="form-control"
                    th:field="*{chassi}"
-                   placeholder="17 dígitos"
+                   th:placeholder="#{veiculo.chassi.placeholder}"
                    th:classappend="${#fields.hasErrors('chassi')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('chassi')}">
               <span th:errors="*{chassi}"></span>
@@ -78,12 +76,12 @@
         <div class="form-row">
           <!-- Ano -->
           <div class="form-group col-md-4">
-            <label for="ano">Ano</label>
+            <label for="ano" th:text="#{ano.label}"></label>
             <input type="number"
                    id="ano"
                    class="form-control"
                    th:field="*{ano}"
-                   placeholder="2020"
+                   th:placeholder="#{veiculo.ano.placeholder}"
                    th:classappend="${#fields.hasErrors('ano')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('ano')}">
               <span th:errors="*{ano}"></span>
@@ -92,12 +90,12 @@
 
           <!-- Quilometragem -->
           <div class="form-group col-md-4">
-            <label for="quilometragem">Quilometragem</label>
+            <label for="quilometragem" th:text="#{quilometragem.label}"></label>
             <input type="number"
                    id="quilometragem"
                    class="form-control"
                    th:field="*{quilometragem}"
-                   placeholder="Km"
+                   th:placeholder="#{veiculo.quilometragem.placeholder}"
                    th:classappend="${#fields.hasErrors('quilometragem')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('quilometragem')}">
               <span th:errors="*{quilometragem}"></span>
@@ -106,14 +104,13 @@
 
           <!-- Valor -->
           <div class="form-group col-md-4">
-            <label for="valor">Valor (R$)</label>
-            <input type="number"
-                   step="0.01"
-                   id="valor"
-                   class="form-control"
-                   th:field="*{valor}"
-                   placeholder="00000.00"
-                   th:classappend="${#fields.hasErrors('valor')}? 'is-invalid'">
+            <label for="valor" th:text="#{valor.label}"></label>
+            <input type="text"
+              id="valor"
+              th:field="*{valor}"
+              class="form-control"
+              th:placeholder="#{veiculo.valor.placeholder}"
+              th:classappend="${#fields.hasErrors('valor')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('valor')}">
               <span th:errors="*{valor}"></span>
             </div>
@@ -122,36 +119,36 @@
 
         <!-- Descrição -->
         <div class="form-group">
-          <label for="descricao">Descrição</label>
+          <label for="descricao" th:text="#{descricao.label}"></label>
           <textarea id="descricao"
                     class="form-control"
                     th:field="*{descricao}"
                     rows="3"
-                    placeholder="Detalhes do veículo"
+                    th:placeholder="#{veiculo.descricao.placeholder}"
                     th:classappend="${#fields.hasErrors('descricao')}? 'is-invalid'"></textarea>
           <div class="invalid-feedback" th:if="${#fields.hasErrors('descricao')}">
             <span th:errors="*{descricao}"></span>
           </div>
         </div>
 
-        <!-- Fotos (JSON) -->
+        <!-- Fotos (JSON) --
         <div class="form-group">
-          <label for="fotos">Fotos (JSON)</label>
+          <label for="fotos" th:text="#{fotos.label}">Fotos (JSON)</label>
           <textarea id="fotos"
                     class="form-control"
                     th:field="*{fotos}"
                     rows="2"
-                    placeholder='["url1","url2",...]'
+                    th:placeholder="#{veiculo.fotos.placeholder}"
                     th:classappend="${#fields.hasErrors('fotos')}? 'is-invalid'"></textarea>
           <div class="invalid-feedback" th:if="${#fields.hasErrors('fotos')}">
             <span th:errors="*{fotos}"></span>
           </div>
-        </div>
+        </div>-->
 
         <input type="hidden" name="loja.id"
           th:value="${#authentication.principal.usuario.id}" />
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="submit" class="btn btn-primary" th:text="#{salvar.button}"></button>
       </form>
     </div>
 

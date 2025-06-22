@@ -1,4 +1,3 @@
-// br/ufscar/dc/dsw/domain/Proposta.java
 package br.ufscar.dc.dsw.domain;
 
 import java.math.BigDecimal;
@@ -15,7 +14,8 @@ public class Proposta extends AbstractEntity<Long> {
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal valor;
 
-    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String condicoesPgto;
 
     @NotNull

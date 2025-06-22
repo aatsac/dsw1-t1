@@ -24,55 +24,55 @@
 
         <!-- Clientes: apenas ADMIN -->
         <ul class="nav nav-pills" sec:authorize="hasAuthority('ADMIN')">
-            <li class="nav-item"><span class="nav-link active">Clientes</span></li>
+            <li class="nav-item"><span class="nav-link active" th:text="#{menu.clientes}"></span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/clientes/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
+                    <i class="oi oi-plus"></i><span>&nbsp;</span><span th:text="#{menu.clientes.cadastrar}"></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/clientes/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
+                    <i class="oi oi-spreadsheet"></i><span>&nbsp;</span><span th:text="#{menu.clientes.listar}"></span>
                 </a>
             </li>
         </ul>
 
         <!-- Lojas: apenas ADMIN -->
         <ul class="nav nav-pills" sec:authorize="hasAuthority('ADMIN')">
-            <li class="nav-item"><span class="nav-link active">Lojas</span></li>
+            <li class="nav-item"><span class="nav-link active" th:text="#{menu.lojas}"></span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/lojas/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
+                    <i class="oi oi-plus"></i><span>&nbsp;</span><span th:text="#{menu.lojas.cadastrar}"></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/lojas/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
+                    <i class="oi oi-spreadsheet"></i><span>&nbsp;</span><span th:text="#{menu.lojas.listar}"></span>
                 </a>
             </li>
         </ul>
 
         <!-- Veículos: LOJA -->
         <ul class="nav nav-pills" sec:authorize="hasAuthority('LOJA')">
-            <li class="nav-item"><span class="nav-link active">Veículos</span></li>
+            <li class="nav-item"><span class="nav-link active" th:text="#{menu.veiculos}"></span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/veiculos/cadastrar}">
-                    <i class="oi oi-plus"></i> <span>Cadastrar</span>
+                    <i class="oi oi-plus"></i><span>&nbsp;</span><span th:text="#{menu.veiculos.cadastrar}"></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/veiculos/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
+                    <i class="oi oi-spreadsheet"></i><span>&nbsp;</span><span th:text="#{menu.veiculos.listar}"></span>
                 </a>
             </li>
         </ul>
 
         <!-- Propostas: CLIENTE e LOJA -->
         <ul class="nav nav-pills" sec:authorize="hasAnyAuthority('CLIENTE', 'LOJA')">
-            <li class="nav-item"><span class="nav-link active">Propostas</span></li>
+            <li class="nav-item"><span class="nav-link active" th:text="#{menu.propostas}"></span></li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/propostas/listar}">
-                    <i class="oi oi-spreadsheet"></i> <span>Listar</span>
+                    <i class="oi oi-spreadsheet"></i><span>&nbsp;</span><span th:text="#{menu.propostas.listar}"></span>
                 </a>
             </li>
         </ul>
