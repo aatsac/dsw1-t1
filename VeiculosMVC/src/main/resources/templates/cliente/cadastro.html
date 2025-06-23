@@ -104,7 +104,7 @@
 
         <!-- Data de Nascimento -->
         <div class="form-group">
-          <label for="dataNascimento" th:text="#{data.label}">Data de Nascimento</label>
+          <label for="dataNascimento" th:text="#{cliente.data.label}">Data de Nascimento</label>
           <input type="date" id="dataNascimento" class="form-control"
                  th:field="*{dataNascimento}"
                  th:classappend="${#fields.hasErrors('dataNascimento')}? 'is-invalid'">
