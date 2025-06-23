@@ -11,6 +11,7 @@ public interface IPropostaDAO extends CrudRepository<Proposta, Long> {
     List<Proposta> findAll();
     List<Proposta> findByClienteId(Long idCliente);
     List<Proposta> findByVeiculoId(Long idVeiculo);
+    List<Proposta> findByVeiculoLojaId(Long lojaId);
     boolean existsByClienteIdAndStatusAndVeiculoId(Long clienteId, Proposta.Status status, Long veiculoId);
     Proposta save(Proposta proposta);
     void deleteById(Long id);

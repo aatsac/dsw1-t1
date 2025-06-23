@@ -85,8 +85,8 @@ public class PropostaController {
         List<Proposta> lista = new ArrayList<>();
 
         if (usuario instanceof Loja) {
-            // Lojistas veem todas as propostas
-            lista = propostaService.buscarTodos();
+            Loja loja = (Loja) usuario;
+            lista = propostaService.buscarPorLoja(loja.getId());
         } else if (usuario instanceof Cliente) {
             // Clientes veem apenas suas próprias propostas
             Cliente cliente = (Cliente) usuario;

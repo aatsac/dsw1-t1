@@ -37,6 +37,12 @@ public class PropostaService implements IPropostaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Proposta> buscarPorLoja(Long idLoja) {
+        return dao.findByVeiculoLojaId(idLoja);
+    }
+
+    @Override
     public boolean existePropostaAberta(Long clienteId, Long veiculoId) {
         return dao.existsByClienteIdAndStatusAndVeiculoId(clienteId, Proposta.Status.ABERTO, veiculoId);
     }
