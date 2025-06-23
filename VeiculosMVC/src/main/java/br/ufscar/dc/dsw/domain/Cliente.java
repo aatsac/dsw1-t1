@@ -4,6 +4,8 @@ package br.ufscar.dc.dsw.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import br.ufscar.dc.dsw.validation.UniqueCpf;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,6 +43,7 @@ public class Cliente extends Usuario {
 
 
     @Past(message = "{Past.cliente.dataNascimento}")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
 
     @OneToMany(mappedBy = "cliente")

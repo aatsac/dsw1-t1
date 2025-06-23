@@ -31,7 +31,7 @@ public class Veiculo extends AbstractEntity<Long> {
     private String modelo;
 
     @NotBlank
-    @UniqueChassi(message = "Unique.veiculo.chassi")
+    @UniqueChassi(message = "{Unique.veiculo.chassi}")
     @Size(max = 17)
     @Column(nullable = false, unique = true, length = 17)
     private String chassi;

@@ -3,6 +3,8 @@ package br.ufscar.dc.dsw.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,6 +21,7 @@ public class Proposta extends AbstractEntity<Long> {
     private String condicoesPgto;
 
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "dataCompra", nullable = false)
     private LocalDate dataCompra;
 

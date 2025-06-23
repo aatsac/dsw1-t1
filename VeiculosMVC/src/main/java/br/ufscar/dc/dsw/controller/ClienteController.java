@@ -62,8 +62,7 @@ public class ClienteController {
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		
 		// Apenas rejeita se o problema não for com o CPF (CPF campo read-only) 
-		
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("cpf") == null) {
+		if (result.getFieldErrorCount() > 2 || (result.getFieldError("cpf") == null && result.getFieldError("email") == null)) {
 			return "cliente/cadastro";
 		}
 
