@@ -131,20 +131,17 @@
           </div>
         </div>
 
-        <!-- Fotos (JSON) --
+        <!-- Fotos --
         <div class="form-group">
-          <label for="fotos" th:text="#{fotos.label}">Fotos (JSON)</label>
-          <textarea id="fotos"
-                    class="form-control"
-                    th:field="*{fotos}"
-                    rows="2"
-                    th:placeholder="#{veiculo.fotos.placeholder}"
-                    th:classappend="${#fields.hasErrors('fotos')}? 'is-invalid'"></textarea>
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('fotos')}">
-            <span th:errors="*{fotos}"></span>
-          </div>
-        </div>-->
-
+          <label for="fotos">Fotos (até 10)</label>
+          <input type="file"
+                id="fotos"
+                name="fotos"
+                class="form-control"
+                multiple
+                accept="image/*" />
+        </div> -->
+        
         <input type="hidden" name="loja.id"
           th:value="${#authentication.principal.usuario.id}" />
 

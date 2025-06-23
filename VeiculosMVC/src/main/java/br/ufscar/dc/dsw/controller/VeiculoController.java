@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import jakarta.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.core.Authentication;
 
@@ -63,10 +65,15 @@ public class VeiculoController {
     }
     
     @PostMapping("/salvar")
-    public String salvar(@Valid Veiculo veiculo, BindingResult result, RedirectAttributes attr) {
+    public String salvar(@Valid Veiculo veiculo, BindingResult result/*, @RequestParam("fotos") MultipartFile[] fotos*/, RedirectAttributes attr) throws IOException {
         if (result.hasErrors()) {
             return "veiculo/cadastro";
         }
+    /*for (MultipartFile file : fotos) {
+        if (file != null && !file.isEmpty()) {
+            veiculo.getFotos().add(file.getBytes());
+        }
+    }*/
         veiculo.setLoja(getLojaLogada());
         veiculoService.salvar(veiculo);
         attr.addFlashAttribute("sucess", "Veículo salvo com sucesso.");

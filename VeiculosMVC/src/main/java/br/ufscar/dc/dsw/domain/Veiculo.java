@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.domain;
 
 import java.math.BigDecimal;
+//import java.util.ArrayList;
 import java.util.List;
 
 //import br.ufscar.dc.dsw.validation.UniqueChassi;
@@ -52,12 +53,15 @@ public class Veiculo extends AbstractEntity<Long> {
 
     @OneToMany(mappedBy = "veiculo")
     private List<Proposta> propostas;
-
-    /**
-     * Armazena o JSON das URLs das fotos, ex: ["url1","url2",...]
-     
-    //@Column(columnDefinition = "JSON")
-    private String fotos;*/
+    
+    /*@ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+        name = "veiculo_fotos",
+        joinColumns = @JoinColumn(name = "veiculo_id")
+    )
+    @Column(name = "foto", columnDefinition = "LONGBLOB")
+    @Lob
+    private List<byte[]> fotos = new ArrayList<>();*/
     
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -107,10 +111,10 @@ public class Veiculo extends AbstractEntity<Long> {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
-    /*public String getFotos() {
+    /*public List<byte[]> getFotos() {
         return fotos;
     }
-    public void setFotos(String fotos) {
+    public void setFotos(List<byte[]> fotos) {
         this.fotos = fotos;
     }*/
     public Loja getLoja() {
