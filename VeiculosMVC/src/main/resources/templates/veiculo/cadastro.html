@@ -23,8 +23,10 @@
     <div class="container">
       <div th:replace="~{fragments/alert}"></div>
 
-      <form th:object="${veiculo}" th:action="@{/veiculos/salvar}" method="post">
-
+      <form th:object="${veiculo}"
+            th:action="${veiculo.id} == null ? @{/veiculos/salvar} : @{/veiculos/editar}"
+            method="post">
+      
         <input type="hidden" th:field="*{id}" />
 
         <div class="form-row">
@@ -36,6 +38,7 @@
                    class="form-control"
                    th:field="*{placa}"
                    th:placeholder="#{veiculo.placa.placeholder}"
+                   th:disabled="${veiculo.id != null}"
                    th:classappend="${#fields.hasErrors('placa')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('placa')}">
               <span th:errors="*{placa}"></span>
@@ -66,6 +69,7 @@
                    class="form-control"
                    th:field="*{chassi}"
                    th:placeholder="#{veiculo.chassi.placeholder}"
+                   th:disabled="${veiculo.id != null}"
                    th:classappend="${#fields.hasErrors('chassi')}? 'is-invalid'">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('chassi')}">
               <span th:errors="*{chassi}"></span>
@@ -144,6 +148,16 @@
         
         <input type="hidden" name="loja.id"
           th:value="${#authentication.principal.usuario.id}" />
+        
+        <input
+          type="hidden"
+          th:field="*{placa}"
+          th:if="${veiculo.id != null}" />
+
+        <input
+          type="hidden"
+          th:field="*{chassi}"
+          th:if="${veiculo.id != null}" />
 
         <button type="submit" class="btn btn-primary" th:text="#{salvar.button}"></button>
       </form>

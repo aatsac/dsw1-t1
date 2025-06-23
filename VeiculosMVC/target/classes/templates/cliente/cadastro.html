@@ -68,6 +68,7 @@
           <input type="text" id="cpf" class="form-control"
                  th:field="*{cpf}" th:placeholder="#{cliente.cpf.placeholder}"
                  data-mask="000.000.000-00"
+                 th:disabled="${cliente.id != null}"
                  th:classappend="${#fields.hasErrors('cpf')}? 'is-invalid'">
           <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}">
             <span th:errors="*{cpf}"></span>
@@ -111,6 +112,12 @@
             <span th:errors="*{dataNascimento}"></span>
           </div>
         </div>
+
+        <input
+          type="hidden"
+          th:field="*{cpf}"
+          th:if="${cliente.id != null}" />
+
 
         <button type="submit" class="btn btn-primary" th:text="#{salvar.button}">Salvar</button>
       </form>

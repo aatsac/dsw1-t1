@@ -54,26 +54,18 @@ public class LojaController {
 	
 	@PostMapping("/editar")
 	public String editar(@Valid Loja loja, BindingResult result, RedirectAttributes attr) {
-		if (result.hasErrors()) {
+		
+		// Apenas rejeita se o problema não for com o CNPJ (CNPJ campo read-only) 
+		
+		if (result.getFieldErrorCount() > 1 || result.getFieldError("cnpj") == null) {
 			return "loja/cadastro";
 		}
 
-		Loja existente = service.buscarPorId(loja.getId());
-		if (existente != null) {
-			existente.setNome(loja.getNome());
-			existente.setEmail(loja.getEmail());
-			// só recriptografa se a senha foi alterada
-			if (!loja.getPassword().isBlank()) {
-				existente.setPassword(passwordEncoder.encode(loja.getPassword()));
-			}
-			existente.setDescricao(loja.getDescricao());
-			service.salvar(existente);
-			attr.addFlashAttribute("sucess", "Loja editada com sucesso.");
-		} else {
-			attr.addFlashAttribute("fail", "Loja não encontrada.");
-		}
+		service.salvar(loja);
+		attr.addFlashAttribute("sucess", "Loja editada com sucesso.");
 		return "redirect:/lojas/listar";
 	}
+
 	
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, ModelMap model) {

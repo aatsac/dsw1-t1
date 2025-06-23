@@ -36,17 +36,8 @@ public class VeiculoController {
         return lojaService.buscarTodos();
     }
 
-    private Loja getLojaLogada() {
-        UsuarioDetails ud = (UsuarioDetails)
-            SecurityContextHolder.getContext()
-                                 .getAuthentication()
-                                 .getPrincipal();
-        return (Loja) ud.getUsuario();
-    }
-
     @GetMapping("/cadastrar")
     public String cadastrar(Veiculo veiculo) {
-        veiculo.setLoja(getLojaLogada());
         return "veiculo/cadastro";
     }
 
@@ -65,16 +56,10 @@ public class VeiculoController {
     }
     
     @PostMapping("/salvar")
-    public String salvar(@Valid Veiculo veiculo, BindingResult result/*, @RequestParam("fotos") MultipartFile[] fotos*/, RedirectAttributes attr) throws IOException {
+    public String salvar(@Valid Veiculo veiculo, BindingResult result, RedirectAttributes attr) throws IOException {
         if (result.hasErrors()) {
             return "veiculo/cadastro";
         }
-    /*for (MultipartFile file : fotos) {
-        if (file != null && !file.isEmpty()) {
-            veiculo.getFotos().add(file.getBytes());
-        }
-    }*/
-        veiculo.setLoja(getLojaLogada());
         veiculoService.salvar(veiculo);
         attr.addFlashAttribute("sucess", "Veículo salvo com sucesso.");
         return "redirect:/veiculos/listar";
@@ -97,7 +82,7 @@ public class VeiculoController {
             RedirectAttributes attr,
             ModelMap model) {
         
-        if (result.hasErrors()) {
+        if (result.getFieldErrorCount() > 2 || (result.getFieldError("chassi") == null && result.getFieldError("chassi") == null)) {
             model.addAttribute("lojas", listaLojas());
             return "veiculo/cadastro";
         }

@@ -87,6 +87,7 @@
             th:placeholder="#{loja.cnpj.placeholder}"
             data-mask="00.000.000/0000-00"
             data-mask-reverse="true"
+            th:disabled="${loja.id != null}"
             th:classappend="${#fields.hasErrors('cnpj')}? 'is-invalid'">
           <div class="invalid-feedback" th:if="${#fields.hasErrors('cnpj')}">
             <span th:errors="*{cnpj}"></span>
@@ -109,6 +110,12 @@
         </div>
 
         <input type="hidden" th:field="*{id}" />
+        
+        <input
+          type="hidden"
+          th:field="*{cnpj}"
+          th:if="${loja.id != null}" />
+
         <button type="submit" class="btn btn-primary" th:text="#{salvar.button}">Salvar</button>
       </form>
     </div>

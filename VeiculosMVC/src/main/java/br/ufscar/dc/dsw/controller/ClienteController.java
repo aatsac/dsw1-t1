@@ -60,27 +60,15 @@ public class ClienteController {
 
 	@PostMapping("/editar")
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		if (result.hasErrors()) {
+		
+		// Apenas rejeita se o problema não for com o CPF (CPF campo read-only) 
+		
+		if (result.getFieldErrorCount() > 1 || result.getFieldError("cpf") == null) {
 			return "cliente/cadastro";
 		}
 
-		Cliente existente = service.buscarPorId(cliente.getId());
-		if (existente != null) {
-			existente.setNome(cliente.getNome());
-			existente.setEmail(cliente.getEmail());
-			// só recriptografa se a senha foi alterada
-			if (!cliente.getPassword().isBlank()) {
-				existente.setPassword(passwordEncoder.encode(cliente.getPassword()));
-			}
-			existente.setTelefone(cliente.getTelefone());
-			existente.setSexo(cliente.getSexo());
-			existente.setDataNascimento(cliente.getDataNascimento());
-			// Não altere o CPF!
-			service.salvar(existente);
-			attr.addFlashAttribute("sucess", "Cliente editado com sucesso.");
-		} else {
-			attr.addFlashAttribute("fail", "Cliente não encontrado.");
-		}
+		service.salvar(cliente);
+		attr.addFlashAttribute("sucess", "Cliente editado com sucesso.");
 		return "redirect:/clientes/listar";
 	}
 		
