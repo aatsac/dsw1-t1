@@ -26,18 +26,16 @@
 
       <!-- FORMULÁRIO -->
       <form th:object="${proposta}"
-            th:action="${proposta.id} == null 
-                        ? @{/propostas/salvar} 
-                        : @{/propostas/editar}"
+            th:action="${proposta.id} == null ? @{/propostas/salvar} : @{/propostas/editar}"
             method="post">
 
-        <!-- campos comuns -->
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" name="cliente.id"
                th:value="${#authentication.principal.usuario.id}" />
         <input type="hidden" th:field="*{veiculo.id}" />
 
-        <div sec:authorize="hasAuthority('CLIENTE')">
+        <!-- CLIENTE só vê campos ao criar (não pode editar depois) -->
+        <div sec:authorize="hasAuthority('CLIENTE')" th:if="${proposta.id} == null">
           <div class="row mb-3">
             <div class="col-md-4">
               <label for="valor" th:text="#{valor.label}">Valor (R$)</label>
@@ -69,20 +67,17 @@
             </div>
           </div>
 
-          <!-- status e data ficam escondidos para o cliente; pré-definidos -->
           <input type="hidden" th:field="*{status}" th:value="'ABERTO'" />
           <input type="hidden" th:field="*{dataCompra}"
                  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 
           <div class="text-right mb-4">
             <button type="submit" class="btn btn-primary"
-                    th:text="#{salvar.button}">
-              Salvar Proposta
-            </button>
+                    th:text="#{salvar.button}">Salvar Proposta</button>
           </div>
         </div>
 
-        <!-- LOJA vê/edita apenas o campo status e só em edição (não em cadastro) -->
+        <!-- LOJA vê/edita status somente em edição -->
         <div sec:authorize="hasAuthority('LOJA')" th:if="${proposta.id} != null">
           <div class="row mb-3">
             <div class="col-md-4">
@@ -103,11 +98,9 @@
             </div>
           </div>
 
-          <!-- botão de atualizar só para loja em edição -->
           <div class="text-right">
-            <button type="submit" class="btn btn-primary" th:text="#{proposta.atualizar.status.button}">
-              Atualizar Status
-            </button>
+            <button type="submit" class="btn btn-primary"
+                    th:text="#{proposta.atualizar.status.button}">Atualizar Status</button>
           </div>
         </div>
 

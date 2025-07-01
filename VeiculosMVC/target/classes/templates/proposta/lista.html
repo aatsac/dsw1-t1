@@ -1,6 +1,8 @@
 <!-- lista.html -->
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8" />
 </head>
@@ -32,7 +34,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="p : ${propostas}" th:with="statusKey='proposta.status.' + p.status">
+            <tr th:each="p : ${propostas}"
+                th:with="statusKey='proposta.status.' + p.status"
+                th:classappend="${p.status.name() == 'ACEITO'} ? 'table-success'">
               <td th:text="${p.id}">1</td>
               <td th:text="${p.cliente.nome}">Fulano</td>
               <td th:text="${p.veiculo.modelo + ' (' + p.veiculo.placa + ')'}">Modelo</td>
@@ -40,17 +44,24 @@
               <td th:text="${p.dataCompra}">2025-06-18</td>
               <td th:text="${p.status}">ABERTO</td>
               <td>
+                <!-- editar só para LOJA e apenas se não estiver ACEITO -->
                 <a class="btn btn-info btn-sm"
                    th:href="@{/propostas/editar/{id}(id=${p.id})}"
                    role="button"
-                   th:title="#{editar.label}">
+                   th:title="#{editar.label}"
+                   sec:authorize="hasAuthority('LOJA')"
+                   th:if="${p.status.name() != 'ACEITO'}">
                   <span class="oi oi-brush"></span>
                 </a>
+
+                <!-- excluir só para CLIENTE e apenas se não estiver ACEITO -->
                 <a class="btn btn-danger btn-sm"
                    th:href="@{/propostas/excluir/{id}(id=${p.id})}"
                    role="button"
                    th:title="#{excluir.label}"
-                   th:onclick="|return confirm('#{excluir.confirm}');|">
+                   th:onclick="|return confirm('#{excluir.confirm}');|"
+                   sec:authorize="hasAuthority('CLIENTE')"
+                   th:if="${p.status.name() != 'ACEITO'}">
                   <span class="oi oi-circle-x"></span>
                 </a>
               </td>

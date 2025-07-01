@@ -2,14 +2,15 @@ package br.ufscar.dc.dsw.dao;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import br.ufscar.dc.dsw.domain.Proposta.Status;
 
 import br.ufscar.dc.dsw.domain.Veiculo;
 
-public interface IVeiculoDAO extends JpaRepository<Veiculo, Long> {
+public interface IVeiculoDAO extends CrudRepository<Veiculo, Long> {
+    List<Veiculo> findAll();
     List<Veiculo> findAllByLojaId(Long lojaId);
     Veiculo findByPlaca(String placa);
     Veiculo findByChassi(String chassi);
