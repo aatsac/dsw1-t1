@@ -37,7 +37,6 @@
                th:value="${#authentication.principal.usuario.id}" />
         <input type="hidden" th:field="*{veiculo.id}" />
 
-        <!-- CLIENTE vê/edita apenas valor e descrições e só pode SALVAR quando for NOVO -->
         <div sec:authorize="hasAuthority('CLIENTE')">
           <div class="row mb-3">
             <div class="col-md-4">
@@ -75,11 +74,9 @@
           <input type="hidden" th:field="*{dataCompra}"
                  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 
-          <!-- botão de salvar só aparece para cliente em NOVO -->
           <div class="text-right mb-4">
             <button type="submit" class="btn btn-primary"
-                    th:if="${proposta.id} == null"
-                    th:text="#{proposta.salvar.button}">
+                    th:text="#{salvar.button}">
               Salvar Proposta
             </button>
           </div>
@@ -93,7 +90,7 @@
               <select id="status"
                       class="form-control"
                       th:field="*{status}"
-                      th:disabled="${proposta.status == T(br.ufscar.dc.dsw.domain.Proposta$Status).ACEITO}"
+                      th:disabled="${proposta.status?.name() == 'ACEITO'}"
                       th:classappend="${#fields.hasErrors('status')}? 'is-invalid'">
                 <option value="" disabled th:text="#{proposta.status.selecione}">Selecione</option>
                 <option th:value="ABERTO" th:text="#{proposta.status.aberto}">Aberto</option>

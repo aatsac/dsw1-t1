@@ -61,20 +61,33 @@
           </div>
         </div>
 
-        <!-- Password (herdado de Usuario) -->
+        <!-- Senha -->
         <div class="form-group">
           <label for="password" th:text="#{senha.label}">Senha</label>
-          <input
-            type="password"
-            id="password"
-            class="form-control"
-            th:field="*{password}"
-            th:placeholder="#{senha.placeholder}"
-            th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}">
-            <span th:errors="*{password}"></span>
+
+          <!-- Criação: campo “password” normal -->
+          <div th:if="${loja.id == null}">
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              th:field="*{password}"
+              th:placeholder="#{senha.placeholder}"
+              th:classappend="${#fields.hasErrors('password')}? 'is-invalid'"/>
           </div>
-        </div>
+
+          <!-- Edição: input “novoPassword” e hidden mantém o valor atual -->
+          <div th:if="${loja.id != null}">
+            <input
+              type="password"
+              id="novoPassword"
+              name="novoPassword"
+              class="form-control"
+              th:placeholder="#{senha.placeholder}"
+              th:classappend="${#fields.hasErrors('password')}? 'is-invalid'"/>
+            <!-- preserva o valor atual, não sobrescreve se “novoPassword” vier vazio -->
+            <input type="hidden" th:field="*{password}" />
+          </div>
 
         <!-- CNPJ -->
         <div class="form-group">

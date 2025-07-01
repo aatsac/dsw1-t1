@@ -48,7 +48,7 @@ public class ClienteController {
 		cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
 		
 		service.salvar(cliente);
-		attr.addFlashAttribute("sucess", "Cliente inserida com sucesso.");
+		attr.addFlashAttribute("sucess", "client.save.sucess");
 		return "redirect:/clientes/listar";
 	}
 	
@@ -59,25 +59,32 @@ public class ClienteController {
 	}
 
 	@PostMapping("/editar")
-	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+	public String editar(@Valid Cliente cliente, BindingResult result, String novoPassword, RedirectAttributes attr) {
 		
 		// Apenas rejeita se o problema não for com o CPF (CPF campo read-only) 
 		if (result.getFieldErrorCount() > 2 || (result.getFieldError("cpf") == null && result.getFieldError("email") == null)) {
 			return "cliente/cadastro";
 		}
 
+		if (novoPassword != null && !novoPassword.trim().isEmpty()) {
+			cliente.setPassword(passwordEncoder.encode(novoPassword));
+		}
+		else {
+			System.out.println("Senha não foi editada");
+		}
+
 		service.salvar(cliente);
-		attr.addFlashAttribute("sucess", "Cliente editado com sucesso.");
+		attr.addFlashAttribute("sucess", "cliente.edit.sucess");
 		return "redirect:/clientes/listar";
 	}
 		
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
         if (service.clienteTemProposta(id)) {
-            attr.addFlashAttribute("fail", "Cliente não pode ser excluído pois possui propostas associadas.");
+            attr.addFlashAttribute("fail", "cliente.delete.fail");
         } else {
             service.excluir(id);
-            attr.addFlashAttribute("sucess", "Cliente excluído com sucesso.");
+            attr.addFlashAttribute("sucess", "cliente.delete.sucess");
         }
         return "redirect:/clientes/listar";
     }

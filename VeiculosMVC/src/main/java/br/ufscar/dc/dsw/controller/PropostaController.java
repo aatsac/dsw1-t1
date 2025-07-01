@@ -109,9 +109,8 @@ public class PropostaController {
 
         // 1) Se for criação (id == null) e já existir proposta em aberto -> erro
         if (proposta.getId() == null && propostaService.existePropostaAberta(cliente.getId(), veiculoId)) {
-            result.rejectValue("veiculo",
-                   "openProposal",
-                   "Você já possui uma proposta em aberto para este veículo.");
+            attr.addFlashAttribute("fail", "proposta.existe");
+            return "redirect:/propostas/listar";
         }
 
         // 2) Se houver erros (validação ou regra de negócio), retorna ao formulário
@@ -124,7 +123,7 @@ public class PropostaController {
         proposta.setCliente(cliente);
         proposta.setDataCompra(LocalDate.now());
         propostaService.salvar(proposta);
-        attr.addFlashAttribute("sucess", "Proposta enviada com sucesso.");
+        attr.addFlashAttribute("sucess", "proposta.save.sucess");
         return "redirect:/propostas/listar";
     }
 
@@ -154,7 +153,7 @@ public class PropostaController {
             Proposta existente = propostaService.buscarPorId(proposta.getId());
             existente.setStatus(proposta.getStatus());
             propostaService.salvar(existente);
-            attr.addFlashAttribute("sucess", "Status atualizado com sucesso.");
+            attr.addFlashAttribute("sucess", "proposta.status.edit.sucess");
             return "redirect:/propostas/listar";
         }
 
@@ -168,15 +167,15 @@ public class PropostaController {
         propostaService.salvar(proposta);
         attr.addFlashAttribute("sucess",
             proposta.getId() == null
-                ? "Proposta enviada com sucesso."
-                : "Proposta atualizada com sucesso.");
+                ? "proposta.save.sucess"
+                : "proposta.edit.sucess");
         return "redirect:/propostas/listar";
     }
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
         propostaService.excluir(id);
-        model.addAttribute("sucess", "Proposta excluída com sucesso.");
+        model.addAttribute("sucess", "proposta.delete.sucess");
         return listar(model);
     }
 

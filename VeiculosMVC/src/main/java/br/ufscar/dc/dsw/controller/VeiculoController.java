@@ -61,7 +61,7 @@ public class VeiculoController {
             return "veiculo/cadastro";
         }
         veiculoService.salvar(veiculo);
-        attr.addFlashAttribute("sucess", "Veículo salvo com sucesso.");
+        attr.addFlashAttribute("sucess", "veiculo.save.sucess");
         return "redirect:/veiculos/listar";
     }
 
@@ -88,17 +88,17 @@ public class VeiculoController {
         }
         
         veiculoService.salvar(veiculo);
-        attr.addFlashAttribute("sucess", "Veículo editado com sucesso.");
+        attr.addFlashAttribute("sucess", "veiculo.edit.sucess");
         return "redirect:/veiculos/listar";
     }
     
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
         if (veiculoService.veiculoTemProposta(id)) {
-            attr.addFlashAttribute("fail", "Veículo não pode ser excluído pois possui propostas associadas.");
+            attr.addFlashAttribute("fail", "veiculo.delete.fail");
         } else {
             veiculoService.excluir(id);
-            attr.addFlashAttribute("sucess", "Veículo excluído com sucesso.");
+            attr.addFlashAttribute("sucess", "veiculo.delete.sucess");
         }
         return "redirect:/veiculos/listar";
     }

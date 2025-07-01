@@ -42,7 +42,7 @@ public class LojaController {
 		loja.setPassword(passwordEncoder.encode(loja.getPassword()));
 		
 		service.salvar(loja);
-		attr.addFlashAttribute("sucess", "Loja inserida com sucesso.");
+		attr.addFlashAttribute("sucess", "loja.save.sucess");
 		return "redirect:/lojas/listar";
 	}
 	
@@ -53,7 +53,7 @@ public class LojaController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(@Valid Loja loja, BindingResult result, RedirectAttributes attr) {
+	public String editar(@Valid Loja loja, BindingResult result, String novoPassword, RedirectAttributes attr) {
 		
 		// Apenas rejeita se o problema não for com o CNPJ (CNPJ campo read-only) 
 		
@@ -61,8 +61,15 @@ public class LojaController {
 			return "loja/cadastro";
 		}
 
+		if (novoPassword != null && !novoPassword.trim().isEmpty()) {
+			loja.setPassword(passwordEncoder.encode(novoPassword));
+		}
+		else {
+			System.out.println("Senha não foi editada");
+		}
+
 		service.salvar(loja);
-		attr.addFlashAttribute("sucess", "Loja editada com sucesso.");
+		attr.addFlashAttribute("sucess", "loja.edit.sucess");
 		return "redirect:/lojas/listar";
 	}
 
@@ -70,10 +77,10 @@ public class LojaController {
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, ModelMap model) {
 	    if (service.lojaTemVeiculos(id)) {
-	        model.addAttribute("fail", "Loja não excluída. Possui veículo(s) vinculado(s).");
+	        model.addAttribute("fail", "loja.delete.fail");
 	    } else {
 	        service.excluir(id);
-	        model.addAttribute("sucess", "Loja excluída com sucesso.");
+	        model.addAttribute("sucess", "loja.delete.sucess");
 	    }
 	    return listar(model);
 	}
