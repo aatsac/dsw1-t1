@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.ufscar.dc.dsw.domain.Veiculo;
+import br.ufscar.dc.dsw.domain.Proposta.Status;
 import br.ufscar.dc.dsw.service.spec.IVeiculoService;
 
 import java.util.List;
@@ -26,9 +27,9 @@ public class IndexController {
 
         List<Veiculo> lista;
         if (modelo == null || modelo.isBlank()) {
-            lista = service.buscarTodos();
+            lista = service.buscarDisponiveis(Status.ACEITO);
         } else {
-            lista = service.buscarPorModelo(modelo);
+            lista = service.buscarDisponiveisPorModelo(modelo, Status.ACEITO);
         }
         model.addAttribute("veiculos", lista);
         return "index";

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.ufscar.dc.dsw.dao.IVeiculoDAO;
 import br.ufscar.dc.dsw.domain.Veiculo;
+import br.ufscar.dc.dsw.domain.Proposta.Status;
 import br.ufscar.dc.dsw.service.spec.IVeiculoService;
 
 @Service
@@ -30,17 +31,18 @@ public class VeiculoService implements IVeiculoService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Veiculo> buscarPorModelo(String modelo) {
-        if (modelo == null || modelo.isBlank()) {
-            return dao.findAll();
-        }
-        return dao.findByModeloContaining(modelo);
+    public List<Veiculo> buscarPorLoja(Long lojaId) {
+        return dao.findAllByLojaId(lojaId);
     }
 
     @Override
-    public List<Veiculo> buscarPorLoja(Long lojaId) {
-        return dao.findAllByLojaId(lojaId);
+    public List<Veiculo> buscarDisponiveis(Status statusAceito) {
+        return dao.findDisponiveis(statusAceito);
+    }
+
+    @Override
+    public List<Veiculo> buscarDisponiveisPorModelo(String modelo, Status statusAceito) {
+        return dao.findDisponiveisByModelo(modelo, statusAceito);
     }
 
     @Override
