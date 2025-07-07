@@ -31,6 +31,12 @@ public class VeiculoService implements IVeiculoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Veiculo> buscarPorModelo(String modelo) {
+        return dao.findByModeloContaining(modelo);
+    }
+
+    @Override
     public List<Veiculo> buscarPorLoja(Long lojaId) {
         return dao.findAllByLojaId(lojaId);
     }

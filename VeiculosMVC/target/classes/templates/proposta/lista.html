@@ -35,8 +35,9 @@
           </thead>
           <tbody>
             <tr th:each="p : ${propostas}"
-                th:with="statusKey='proposta.status.' + p.status"
-                th:classappend="${p.status.name() == 'ACEITO'} ? 'table-success'">
+                th:classappend="
+                  ${p.status.name() == 'ACEITO'} ? ' table-success' :
+                  (${p.status.name() == 'NAO_ACEITO'} ? ' table-danger' : '')">
               <td th:text="${p.id}">1</td>
               <td th:text="${p.cliente.nome}">Fulano</td>
               <td th:text="${p.veiculo.modelo + ' (' + p.veiculo.placa + ')'}">Modelo</td>
@@ -44,24 +45,24 @@
               <td th:text="${p.dataCompra}">2025-06-18</td>
               <td th:text="${p.status}">ABERTO</td>
               <td>
-                <!-- editar só para LOJA e apenas se não estiver ACEITO -->
+                <!-- só LOJA, e apenas se estiver ABERTO -->
                 <a class="btn btn-info btn-sm"
-                   th:href="@{/propostas/editar/{id}(id=${p.id})}"
-                   role="button"
-                   th:title="#{editar.label}"
-                   sec:authorize="hasAuthority('LOJA')"
-                   th:if="${p.status.name() != 'ACEITO'}">
+                  th:href="@{/propostas/editar/{id}(id=${p.id})}"
+                  role="button"
+                  th:title="#{editar.label}"
+                  sec:authorize="hasAuthority('LOJA')"
+                  th:if="${p.status.name() == 'ABERTO'}">
                   <span class="oi oi-brush"></span>
                 </a>
 
-                <!-- excluir só para CLIENTE e apenas se não estiver ACEITO -->
+                <!-- só CLIENTE, e apenas se estiver ABERTO -->
                 <a class="btn btn-danger btn-sm"
-                   th:href="@{/propostas/excluir/{id}(id=${p.id})}"
-                   role="button"
-                   th:title="#{excluir.label}"
-                   th:onclick="|return confirm('#{excluir.confirm}');|"
-                   sec:authorize="hasAuthority('CLIENTE')"
-                   th:if="${p.status.name() != 'ACEITO'}">
+                  th:href="@{/propostas/excluir/{id}(id=${p.id})}"
+                  role="button"
+                  th:title="#{excluir.label}"
+                  th:onclick="|return confirm('#{excluir.confirm}');|"
+                  sec:authorize="hasAuthority('CLIENTE')"
+                  th:if="${p.status.name() == 'ABERTO'}">
                   <span class="oi oi-circle-x"></span>
                 </a>
               </td>

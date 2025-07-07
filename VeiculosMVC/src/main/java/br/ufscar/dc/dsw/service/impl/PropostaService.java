@@ -22,6 +22,18 @@ public class PropostaService implements IPropostaService {
     }
 
     @Override
+    @Transactional
+    public void aceitarProposta(Proposta proposta) {
+        // 1) rejeita todas as outras
+        dao.rejeitarOutras(
+            proposta.getVeiculo().getId(),
+            proposta.getId() == null ? -1L : proposta.getId());
+        // 2) marca esta como aceita
+        proposta.setStatus(Proposta.Status.ACEITO);
+        dao.save(proposta);
+    }
+
+    @Override
     public List<Proposta> buscarTodos() {
         return dao.findAll();
     }

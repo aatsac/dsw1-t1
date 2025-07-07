@@ -85,7 +85,7 @@
               <select id="status"
                       class="form-control"
                       th:field="*{status}"
-                      th:disabled="${proposta.status?.name() == 'ACEITO'}"
+                      th:disabled="${proposta.status?.name() == 'ACEITO' or proposta.status?.name() == 'NAO_ACEITO'}"
                       th:classappend="${#fields.hasErrors('status')}? 'is-invalid'">
                 <option value="" disabled th:text="#{proposta.status.selecione}">Selecione</option>
                 <option th:value="ABERTO" th:text="#{proposta.status.aberto}">Aberto</option>

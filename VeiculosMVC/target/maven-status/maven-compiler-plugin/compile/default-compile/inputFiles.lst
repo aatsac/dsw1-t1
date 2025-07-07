@@ -1,41 +1,44 @@
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/VeiculosMvcApplication.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/config/MvcConfig.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/config/WebSecurityConfig.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ClienteController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ErrorViewController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/IndexController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/LojaController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/PropostaController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/VeiculoController.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/conversor/LojaConversor.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IClienteDAO.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/ILojaDAO.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IPropostaDAO.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IUsuarioDAO.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IVeiculoDAO.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/AbstractEntity.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Cliente.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Loja.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Proposta.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Usuario.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Veiculo.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetails.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetailsServiceImpl.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/ClienteService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/LojaService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/PropostaService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/VeiculoService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IClienteService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/ILojaService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IPropostaService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IVeiculoService.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueChassi.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueChassiValidator.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCnpj.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCnpjValidator.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCpf.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCpfValidator.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmail.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmailValidator.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniquePlaca.java
-/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniquePlacaValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/VeiculosMvcApplication.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/config/MvcConfig.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/config/WebSecurityConfig.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ClienteController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ClienteRestController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/ErrorViewController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/IndexController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/LojaController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/LojaRestController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/PropostaController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/PropostaRestController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/VeiculoController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/controller/VeiculoRestController.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IClienteDAO.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/ILojaDAO.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IPropostaDAO.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IUsuarioDAO.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/dao/IVeiculoDAO.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/AbstractEntity.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Cliente.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Loja.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Proposta.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Usuario.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/domain/Veiculo.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetails.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/security/UsuarioDetailsServiceImpl.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/ClienteService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/LojaService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/PropostaService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/impl/VeiculoService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IClienteService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/ILojaService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IPropostaService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/service/spec/IVeiculoService.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueChassi.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueChassiValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCnpj.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCnpjValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCpf.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueCpfValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmail.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmailValidator.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniquePlaca.java
+/home/adriano/UFSCar/DSW1/Trabalho/dsw1-t1 (com correções)/VeiculosMVC/src/main/java/br/ufscar/dc/dsw/validation/UniquePlacaValidator.java

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 //import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.ufscar.dc.dsw.validation.UniqueChassi;
 import br.ufscar.dc.dsw.validation.UniquePlaca;
 import jakarta.persistence.*;
@@ -51,6 +53,7 @@ public class Veiculo extends AbstractEntity<Long> {
     @Column(precision = 15, scale = 2)
     private BigDecimal valor;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "veiculo")
     private List<Proposta> propostas;
     
@@ -63,6 +66,7 @@ public class Veiculo extends AbstractEntity<Long> {
     @Lob
     private List<byte[]> fotos = new ArrayList<>();*/
     
+    @JsonIgnore
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "idLoja", nullable = false)

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,11 +27,13 @@ public class Proposta extends AbstractEntity<Long> {
     @Column(name = "dataCompra", nullable = false)
     private LocalDate dataCompra;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "idVeiculo", referencedColumnName = "id", nullable = false)
     private Veiculo veiculo;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "idCliente", referencedColumnName = "id", nullable = false)
