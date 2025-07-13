@@ -149,10 +149,15 @@ public class PropostaController {
 
         // Se for LOJA, atualiza apenas o status
         if (usuario instanceof Loja) {
-            // Busca a proposta original no banco
             Proposta existente = propostaService.buscarPorId(proposta.getId());
             existente.setStatus(proposta.getStatus());
-            propostaService.salvar(existente);
+            if (proposta.getStatus() == Proposta.Status.ACEITO) {
+                // chama o método que rejeita as outras e salva esta como ACEITO
+                propostaService.aceitarProposta(existente);
+            } else {
+                // apenas atualiza para ABERTO ou NAO_ACEITO
+                propostaService.salvar(existente);
+            }
             attr.addFlashAttribute("sucess", "proposta.status.edit.sucess");
             return "redirect:/propostas/listar";
         }

@@ -12,6 +12,7 @@ import br.ufscar.dc.dsw.domain.Veiculo;
 public interface IVeiculoDAO extends CrudRepository<Veiculo, Long> {
     List<Veiculo> findAll();
     List<Veiculo> findAllByLojaId(Long lojaId);
+    List<Veiculo> findByModeloContaining(String modelo);
     Veiculo findByPlaca(String placa);
     Veiculo findByChassi(String chassi);
         @Query("""

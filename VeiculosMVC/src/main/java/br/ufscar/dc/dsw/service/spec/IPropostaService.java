@@ -6,6 +6,7 @@ import br.ufscar.dc.dsw.domain.Proposta;
 
 public interface IPropostaService {
     Proposta buscarPorId(Long id);
+    public void aceitarProposta(Proposta proposta);
     List<Proposta> buscarTodos();
     List<Proposta> buscarPorCliente(Long idCliente);
     List<Proposta> buscarPorVeiculo(Long idVeiculo);

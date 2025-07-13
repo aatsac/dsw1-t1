@@ -64,10 +64,22 @@ public class VeiculosMvcApplication {
 			c2.setNome("Fulano de Tal");
 			c2.setPapel("CLIENTE");
 			c2.setCpf("987.654.321-00");
-			c2.setTelefone("(09) 8765-4321");
+			c2.setTelefone("(89) 8765-4321");
 			c2.setSexo(Cliente.Sexo.F);
 			c2.setDataNascimento(LocalDate.of(1985, 5, 15));
 			clienteDAO.save(c2);
+
+			Cliente c3 = new Cliente();
+			c3.setEmail("ciclano@email.com");
+			c3.setPassword((encoder.encode("123456")));
+			c3.setNome("Ciclano de Tal");
+			c3.setPapel("CLIENTE");
+			c3.setCpf("999.654.321-00");
+			c3.setTelefone("(19) 98765-4321");
+			c3.setSexo(Cliente.Sexo.F);
+			c3.setDataNascimento(LocalDate.of(1995, 5, 15));
+			clienteDAO.save(c3);
+
 
 			Veiculo v1 = new Veiculo();
 			v1.setPlaca("ABC1234");
@@ -101,6 +113,26 @@ public class VeiculosMvcApplication {
 			p1.setDataCompra(LocalDate.now());
 			p1.setStatus(Proposta.Status.ABERTO);
 			propostaDAO.save(p1);
+
+			Proposta p2 = new Proposta();
+			p2.setCliente(c2);
+			p2.setVeiculo(v1);
+			p2.setValor(BigDecimal.valueOf(4000));
+			p2.setCondicoesPgto("Pagamento à vista com 20% de desconto.");
+			p2.setDataCompra(LocalDate.now());
+			p2.setStatus(Proposta.Status.ABERTO);
+			propostaDAO.save(p2);
+
+			Proposta p3 = new Proposta();
+			p3.setCliente(c3);
+			p3.setVeiculo(v1);
+			p3.setValor(BigDecimal.valueOf(40000));
+			p3.setCondicoesPgto("Pagamento à vista com 30% de desconto.");
+			p3.setDataCompra(LocalDate.now());
+			p3.setStatus(Proposta.Status.ABERTO);
+			propostaDAO.save(p3);
+
+
 		};
 	}
 }

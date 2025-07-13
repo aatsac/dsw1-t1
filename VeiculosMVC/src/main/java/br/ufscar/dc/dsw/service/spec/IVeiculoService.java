@@ -8,6 +8,7 @@ public interface IVeiculoService {
     Veiculo buscarPorId(Long id);
     List<Veiculo> buscarTodos();
     List<Veiculo> buscarPorLoja(Long lojaId);
+    List<Veiculo> buscarPorModelo(String modelo);
     List<Veiculo> buscarDisponiveis(Status statusAceito);
     List<Veiculo> buscarDisponiveisPorModelo(String modelo, Status statusAceito);
     void salvar(Veiculo veiculo);

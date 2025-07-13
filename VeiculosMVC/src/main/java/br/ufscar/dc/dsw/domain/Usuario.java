@@ -1,5 +1,7 @@
 package br.ufscar.dc.dsw.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.ufscar.dc.dsw.validation.UniqueEmail;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +24,7 @@ public class Usuario extends AbstractEntity<Long> {
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
+    @JsonIgnore
     @NotBlank
     @Size(min = 6, max = 63)
     @Column(nullable = false, length = 63)
